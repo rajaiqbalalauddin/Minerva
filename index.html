@@ -16,33 +16,53 @@
   <script src="firebase-config.js"></script>
 </head>
 <body>
-  <div class="container">
 
     <!-- ===== LOGIN PAGE ===== -->
     <section id="loginPage" class="page active">
       <div class="header">
         <h1>Minerva</h1>
-        <p>Your personal productivity companion</p>
+        <p>Your personal productivity workspace</p>
       </div>
-      <form id="loginForm">
-        <h2>Welcome back</h2>
-        <input type="email" id="loginEmail" placeholder="Email address" required />
-        <input type="password" id="loginPassword" placeholder="Password" required />
-        <button type="submit">Sign in</button>
-        <p style="text-align:center; color:var(--text-muted); font-size:0.875rem;">Don't have an account? <a href="#" id="goToSignup" style="color:var(--accent); text-decoration:none; font-weight:500;">Create one</a></p>
+      <form id="loginForm" class="auth-form">
+        <h2>Sign in to your account</h2>
+        <div class="input-group">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" list="emailHistory" placeholder="you@example.com" autocomplete="email" required />
+          <datalist id="emailHistory"></datalist>
+        </div>
+        <div class="input-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter your password" required />
+        </div>
+        <button type="submit" class="btn-primary">Sign in</button>
+        <div class="auth-divider"><span>or</span></div>
+        <button type="button" id="googleSignInBtn" class="btn-google">
+          <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+          Continue with Google
+        </button>
+        <p class="auth-switch">Don't have an account? <a href="#" id="goToSignup">Create one</a></p>
       </form>
-    </section>
+    </div>
+  </section>
 
-    <!-- ===== SIGNUP PAGE ===== -->
-    <section id="signupPage" class="page">
-      <div class="header">
+  <!-- ===== SIGNUP PAGE ===== -->
+  <section id="signupPage" class="auth-page page">
+    <div class="auth-container">
+      <div class="auth-brand">
+        <div class="auth-logo">M</div>
         <h1>Minerva</h1>
         <p>Start your productivity journey</p>
       </div>
-      <form id="signupForm">
-        <h2>Create account</h2>
-        <input type="email" id="signupEmail" placeholder="Email address" required />
-        <input type="password" id="signupPassword" placeholder="Password (min 6 characters)" required />
+      <form id="signupForm" class="auth-form">
+        <h2>Create your account</h2>
+        <div class="input-group">
+          <label for="signupEmail">Email</label>
+          <input type="email" id="signupEmail" list="emailHistory" placeholder="you@example.com" autocomplete="email" required />
+        </div>
+        <div class="input-group">
+          <label for="signupPassword">Password</label>
+          <input type="password" id="signupPassword" placeholder="Min 6 characters" required />
+        </div>
 
         <div class="plan-select-wrapper">
           <p class="plan-select-label">Choose your plan</p>
@@ -73,144 +93,162 @@
                 </ul>
               </div>
             </label>
+            <label class="plan-card" id="planCardElite">
+              <input type="radio" name="plan" value="elite" />
+              <div class="plan-card-inner">
+                <span class="plan-icon">💎</span>
+                <span class="plan-name">Scholar Elite</span>
+                <ul class="plan-features-mini">
+                  <li>Everything in Pro</li>
+                  <li>AI chatbot &amp; suggestions</li>
+                  <li>Calendar sync</li>
+                  <li>Export PDF &amp; Excel</li>
+                </ul>
+              </div>
+            </label>
           </div>
         </div>
 
-        <button type="submit">Create account</button>
-        <p style="text-align:center; color:var(--text-muted); font-size:0.875rem;">Already have an account? <a href="#" id="goToLogin" style="color:var(--accent); text-decoration:none; font-weight:500;">Sign in</a></p>
+        <button type="submit" class="btn-primary">Create account</button>
+        <div class="auth-divider"><span>or</span></div>
+        <button type="button" id="googleSignUpBtn" class="btn-google">
+          <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+          Continue with Google
+        </button>
+        <p class="auth-switch">Already have an account? <a href="#" id="goToLogin">Sign in</a></p>
       </form>
-    </section>
+    </div>
+  </section>
 
-    <!-- ===== DASHBOARD ===== -->
-    <section id="dashboard" class="page">
-      <header class="header">
-        <h1>Minerva</h1>
-        <p>Dashboard</p>
-      </header>
+  <!-- ===== MAIN APP SHELL ===== -->
+  <div class="app-shell" style="display:none;" id="appShell">
 
-      <div id="proBadgeHeader" class="pro-badge-header" style="display:none; margin: -16px auto 16px; width:fit-content;">⭐ Student Pro</div>
-
-      <button id="menuBtn" class="menu-btn" aria-label="Menu">
-        <span class="line"></span><span class="line"></span><span class="line"></span>
-      </button>
-
-      <div id="menuDropdown" class="menu-dropdown">
-        <a href="#" onclick="showPage('profile')">👤 Profile</a>
-        <a href="#" onclick="showPage('leaderboardPage')">🏆 Leaderboard</a>
-        <a href="#" id="logoutBtn">🚪 Sign out</a>
+    <!-- Sidebar / Top Nav -->
+    <header class="app-header">
+      <div class="app-header-left">
+        <div class="app-logo">M</div>
+        <span class="app-title">Minerva</span>
+        <div id="proBadgeHeader" class="plan-badge-header" style="display:none;">Student Pro</div>
       </div>
-
-      <!-- XP Bar -->
-      <div class="xp-bar-container">
-        <div class="xp-level-info">
+      <div class="app-header-right">
+        <div class="xp-bar-container">
           <span class="xp-level-badge" id="levelBadge">Lv.1</span>
-          <span class="xp-label">XP: <strong id="xpDisplay">0</strong> / <strong id="xpNextDisplay">100</strong></span>
+          <div class="xp-bar-track">
+            <div class="xp-bar-fill" id="xpBarFill" style="width:0%"></div>
+          </div>
+          <span class="xp-label"><span id="xpDisplay">0</span>/<span id="xpNextDisplay">100</span> XP</span>
         </div>
-        <div class="xp-bar-track">
-          <div class="xp-bar-fill" id="xpBarFill" style="width:0%"></div>
-        </div>
+        <button id="menuBtn" class="menu-btn" aria-label="Menu">
+          <span class="line"></span><span class="line"></span><span class="line"></span>
+        </button>
       </div>
+      <div id="menuDropdown" class="menu-dropdown">
+        <a href="#" onclick="showPage('profile')">Profile</a>
+        <a href="#" onclick="showPage('leaderboardPage')">Leaderboard</a>
+        <a href="#" id="logoutBtn">Sign out</a>
+      </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <section id="dashboard" class="page">
 
       <!-- Streak -->
-      <div class="streak">
-        <div style="font-size:0.875rem; color:var(--text-secondary); margin-bottom:4px;">Current streak</div>
-        <div style="font-size:1.6rem; font-weight:600; color:#d97706; margin-bottom:10px;"><span id="streakCount">0</span> days 🔥</div>
-        <button id="checkInBtn">Tap to Check In Today</button>
-        <p id="checkInStatus" style="margin-top:8px; font-size:0.8rem; color:var(--text-muted);"></p>
+      <div class="streak-bar">
+        <div class="streak-info">
+          <span class="streak-fire"><span id="streakCount">0</span> day streak</span>
+        </div>
+        <button id="checkInBtn" class="btn-checkin">Check In</button>
+        <p id="checkInStatus" class="streak-status"></p>
       </div>
 
       <!-- Tabs -->
       <div class="tabs" id="mainTabs">
-        <button data-tab="taskFocus" class="active">To‑Do / Pomodoro</button>
-        <button data-tab="activities">Activities</button>
+        <button data-tab="taskFocus" class="active">Tasks</button>
+        <button data-tab="activities">Activity</button>
         <button data-tab="budget">Budget</button>
         <button data-tab="badges">Badges</button>
         <button data-tab="habits" class="pro-tab" id="habitsTabBtn" style="display:none;">Habits</button>
-        <button data-tab="focusMode" class="pro-tab" id="focusTabBtn" style="display:none;">🎵 Focus</button>
-        <button data-tab="analytics" class="pro-tab" id="analyticsTabBtn" style="display:none;">📊 Analytics</button>
+        <button data-tab="focusMode" class="pro-tab" id="focusTabBtn" style="display:none;">Focus</button>
+        <button data-tab="analytics" class="pro-tab" id="analyticsTabBtn" style="display:none;">Analytics</button>
+        <button data-tab="aiChat" class="elite-tab" id="aiChatTabBtn" style="display:none;">AI Chat</button>
       </div>
 
       <!-- ===== TO-DO / POMODORO TAB ===== -->
       <div id="taskFocus" class="tab-content active">
-        <h2>To‑Do & Pomodoro</h2>
+        <div class="tab-header">
+          <h2>Tasks & Focus</h2>
+        </div>
 
         <div class="project-bar">
           <label>Project</label>
           <select id="projectSelect"></select>
           <button id="addProjectBtn" class="btn-small">+ New</button>
-          <button id="deleteProjectBtn" class="btn-small btn-danger">🗑</button>
+          <button id="deleteProjectBtn" class="btn-small btn-danger">Delete</button>
         </div>
         <div id="projectLimitNote" class="limit-note" style="display:none;">Free plan: max 3 projects</div>
 
         <div class="pomodoro-panel">
-          <h3>Pomodoro Timer</h3>
           <div class="pomodoro-nav">
-            <button data-pomodoro-mode="pomodoro" class="pomodoro-nav-btn active">Pomodoro (25)</button>
-            <button data-pomodoro-mode="shortBreak" class="pomodoro-nav-btn">Short Break (5)</button>
-            <button data-pomodoro-mode="longBreak" class="pomodoro-nav-btn">Long Break (15)</button>
+            <button data-pomodoro-mode="pomodoro" class="pomodoro-nav-btn active">Focus 25m</button>
+            <button data-pomodoro-mode="shortBreak" class="pomodoro-nav-btn">Break 5m</button>
+            <button data-pomodoro-mode="longBreak" class="pomodoro-nav-btn">Break 15m</button>
           </div>
           <div class="pomodoro-timer">25:00</div>
 
           <div id="pomodoroScreen" class="pomodoro-screen active">
-            <div class="break-section">
-              <h4>Work Session</h4>
-              <div class="buttons-row">
-                <button id="pomodoroStart">Start</button>
-                <button id="pomodoroPause">Pause</button>
-                <button id="pomodoroReset">Reset</button>
-              </div>
+            <div class="buttons-row">
+              <button id="pomodoroStart" class="btn-start">Start</button>
+              <button id="pomodoroPause" class="btn-secondary">Pause</button>
+              <button id="pomodoroReset" class="btn-secondary">Reset</button>
             </div>
           </div>
           <div id="shortBreakScreen" class="pomodoro-screen">
-            <div class="break-section">
-              <h4>Short Break</h4>
-              <div class="buttons-row">
-                <button id="shortBreakStart">Start</button>
-                <button id="shortBreakPause">Pause</button>
-                <button id="shortBreakReset">Reset</button>
-              </div>
+            <div class="buttons-row">
+              <button id="shortBreakStart" class="btn-start">Start</button>
+              <button id="shortBreakPause" class="btn-secondary">Pause</button>
+              <button id="shortBreakReset" class="btn-secondary">Reset</button>
             </div>
           </div>
           <div id="longBreakScreen" class="pomodoro-screen">
-            <div class="break-section">
-              <h4>Long Break</h4>
-              <div class="buttons-row">
-                <button id="longBreakStart">Start</button>
-                <button id="longBreakPause">Pause</button>
-                <button id="longBreakReset">Reset</button>
-              </div>
+            <div class="buttons-row">
+              <button id="longBreakStart" class="btn-start">Start</button>
+              <button id="longBreakPause" class="btn-secondary">Pause</button>
+              <button id="longBreakReset" class="btn-secondary">Reset</button>
             </div>
           </div>
         </div>
 
         <div class="todo-panel">
-          <h3>To‑Do List</h3>
-          <div class="daily-planner-bar">
-            <label>Plan for</label>
-            <input type="date" id="plannerDate" />
+          <div class="todo-panel-header">
+            <h3>To-do list</h3>
+            <div class="daily-planner-bar">
+              <input type="date" id="plannerDate" />
+            </div>
           </div>
           <div class="todo-input-row">
-            <input type="text" id="todoInput" placeholder="Add a new task…" />
+            <input type="text" id="todoInput" placeholder="What needs to be done?" />
             <button id="addTodo">Add</button>
           </div>
+          <button id="suggestTasksBtn" class="suggest-tasks-btn" style="display:none;">Suggest Tasks with AI</button>
+          <div id="suggestTasksResult" class="suggest-tasks-result" style="display:none;"></div>
           <ul id="todoList"></ul>
         </div>
       </div>
 
       <!-- ===== ACTIVITIES TAB ===== -->
       <div id="activities" class="tab-content">
-        <h2>Activity Tracker</h2>
+        <div class="tab-header"><h2>Activity</h2></div>
         <div class="chart-container" style="position: relative; height:40vh; width:100%">
           <canvas id="activityChart"></canvas>
         </div>
-        <div id="usageStats" style="text-align: center; margin-top: 15px;">
-          Today's usage: <span id="minutesToday">0</span> minutes
+        <div id="usageStats" class="usage-stats">
+          Today: <strong><span id="minutesToday">0</span> min</strong>
         </div>
       </div>
 
       <!-- ===== BUDGET TAB ===== -->
       <div id="budget" class="tab-content">
-        <h2>Budget Tracker</h2>
+        <div class="tab-header"><h2>Budget</h2></div>
         <div class="budget-summary">
           <div class="summary-card"><span>Balance</span><h3 id="totalBalance">$0.00</h3></div>
           <div class="summary-card income"><span>Income</span><h3 id="totalIncome">+$0.00</h3></div>
@@ -220,25 +258,25 @@
           <h3>Add transaction</h3>
           <input type="text" id="budgetDesc" placeholder="Description">
           <input type="number" id="budgetAmount" placeholder="Amount (negative = expense)">
-          <button id="addTransaction" style="margin-top: 10px; width: 100%;">Add Transaction</button>
+          <button id="addTransaction">Add Transaction</button>
         </div>
         <div class="history-panel">
-          <h3 style="margin-bottom:10px; font-size:1rem; font-weight:500;">History</h3>
+          <h3>History</h3>
           <ul id="transactionList" class="transaction-list"></ul>
         </div>
       </div>
 
       <!-- ===== BADGES TAB ===== -->
       <div id="badges" class="tab-content">
-        <h2>🏅 Badges & Achievements</h2>
-        <p class="badges-subtitle">Complete tasks and maintain streaks to earn badges!</p>
+        <div class="tab-header"><h2>Badges</h2></div>
+        <p class="section-subtitle">Complete tasks and maintain streaks to earn badges.</p>
         <div id="badgeGrid" class="badge-grid"></div>
       </div>
 
       <!-- ===== HABITS TAB (PRO) ===== -->
       <div id="habits" class="tab-content">
-        <h2>🌱 Habit Tracker</h2>
-        <p class="badges-subtitle">Build lasting habits — check off each day to maintain your chain!</p>
+        <div class="tab-header"><h2>Habits</h2></div>
+        <p class="section-subtitle">Build lasting habits. Check off each day to maintain your chain.</p>
         <div class="habit-add-row">
           <input type="text" id="habitInput" placeholder="New habit (e.g. Read 20 mins)" />
           <button id="addHabitBtn">Add</button>
@@ -248,11 +286,11 @@
 
       <!-- ===== FOCUS / AMBIENT SOUNDS TAB (PRO) ===== -->
       <div id="focusMode" class="tab-content">
-        <h2>🎵 Focus Mode</h2>
-        <p class="badges-subtitle">Pick an ambient sound, set a study timer, and enter deep work.</p>
+        <div class="tab-header"><h2>Focus Mode</h2></div>
+        <p class="section-subtitle">Pick an ambient sound, set a study timer, and enter deep work.</p>
         <div class="focus-sounds-grid" id="focusSoundsGrid"></div>
         <div class="focus-study-timer">
-          <h3 style="margin-bottom:6px; font-size:1rem; font-weight:500;">Study Mode Timer</h3>
+          <h3>Study Timer</h3>
           <div class="focus-timer-display" id="focusTimerDisplay">00:00</div>
           <div class="focus-timer-controls">
             <select id="focusDurationSelect">
@@ -261,55 +299,46 @@
               <option value="60">60 min</option>
               <option value="90">90 min</option>
             </select>
-            <button id="focusTimerStart">Start Session</button>
-            <button id="focusTimerStop" style="background:var(--surface-3); color:var(--text-secondary); border:1px solid var(--border-med);">Stop</button>
+            <button id="focusTimerStart" class="btn-start">Start</button>
+            <button id="focusTimerStop" class="btn-secondary">Stop</button>
           </div>
           <p id="focusModeStatus" class="focus-mode-status"></p>
         </div>
       </div>
 
-      <!-- ===== ANALYTICS TAB (PRO) ===== -->
-      <div id="analytics" class="tab-content">
-        <h2>📊 Analytics Dashboard</h2>
-        <div class="analytics-grid">
-          <div class="analytics-card">
-            <div class="analytics-icon">✅</div>
-            <div class="analytics-value" id="analyticsTasksDone">0</div>
-            <div class="analytics-label">Tasks Done</div>
+      <!-- ===== AI CHAT TAB (ELITE) ===== -->
+      <div id="aiChat" class="tab-content">
+        <div class="tab-header"><h2>AI Assistant</h2></div>
+        <p class="section-subtitle">Ask for study tips, task breakdowns, or productivity advice.</p>
+        <div class="chat-panel-inline">
+          <div class="chat-messages" id="chatMessagesInline">
+            <div class="chat-msg bot">
+              <div class="chat-bubble">Hi! I'm your Minerva AI assistant. I can help with task suggestions, study tips, time management, and more. How can I help you today?</div>
+            </div>
           </div>
-          <div class="analytics-card">
-            <div class="analytics-icon">🍅</div>
-            <div class="analytics-value" id="analyticsPomodoros">0</div>
-            <div class="analytics-label">Pomodoros</div>
-          </div>
-          <div class="analytics-card">
-            <div class="analytics-icon">🔥</div>
-            <div class="analytics-value" id="analyticsStreak">0</div>
-            <div class="analytics-label">Day Streak</div>
-          </div>
-          <div class="analytics-card">
-            <div class="analytics-icon">💎</div>
-            <div class="analytics-value" id="analyticsXP">0</div>
-            <div class="analytics-label">Total XP</div>
-          </div>
-          <div class="analytics-card">
-            <div class="analytics-icon">🌱</div>
-            <div class="analytics-value" id="analyticsHabits">0</div>
-            <div class="analytics-label">Habits</div>
-          </div>
-          <div class="analytics-card">
-            <div class="analytics-icon">⏱️</div>
-            <div class="analytics-value" id="analyticsMinutes">0</div>
-            <div class="analytics-label">Minutes Today</div>
+          <div class="chat-input-row">
+            <input type="text" id="chatInputInline" placeholder="Ask me anything about productivity..." />
+            <button id="chatSendInline">Send</button>
           </div>
         </div>
+      </div>
 
-        <h3 style="margin-top:22px; margin-bottom:10px; font-size:1rem; font-weight:500;">Weekly Task Completions</h3>
+      <!-- ===== ANALYTICS TAB (PRO) ===== -->
+      <div id="analytics" class="tab-content">
+        <div class="tab-header"><h2>Analytics</h2></div>
+        <div class="analytics-grid">
+          <div class="analytics-card"><div class="analytics-value" id="analyticsTasksDone">0</div><div class="analytics-label">Tasks Done</div></div>
+          <div class="analytics-card"><div class="analytics-value" id="analyticsPomodoros">0</div><div class="analytics-label">Pomodoros</div></div>
+          <div class="analytics-card"><div class="analytics-value" id="analyticsStreak">0</div><div class="analytics-label">Day Streak</div></div>
+          <div class="analytics-card"><div class="analytics-value" id="analyticsXP">0</div><div class="analytics-label">Total XP</div></div>
+          <div class="analytics-card"><div class="analytics-value" id="analyticsHabits">0</div><div class="analytics-label">Habits</div></div>
+          <div class="analytics-card"><div class="analytics-value" id="analyticsMinutes">0</div><div class="analytics-label">Min Today</div></div>
+        </div>
+        <h3 class="chart-title">Weekly Tasks</h3>
         <div class="chart-container" style="position:relative; height:30vh; width:100%">
           <canvas id="analyticsTaskChart"></canvas>
         </div>
-
-        <h3 style="margin-top:22px; margin-bottom:10px; font-size:1rem; font-weight:500;">XP Progress</h3>
+        <h3 class="chart-title">XP Progress</h3>
         <div class="chart-container" style="position:relative; height:30vh; width:100%">
           <canvas id="analyticsXPChart"></canvas>
         </div>
@@ -319,14 +348,14 @@
 
     <!-- ===== LEADERBOARD PAGE ===== -->
     <section id="leaderboardPage" class="page">
-      <div class="header"><h1>Minerva</h1><p>🏆 Leaderboard</p></div>
+      <div class="page-header"><h2>Leaderboard</h2></div>
       <div id="leaderboardList" class="leaderboard-list"></div>
-      <button onclick="showPage('dashboard')" style="margin-top:24px; width:100%;">← Back to Dashboard</button>
+      <button onclick="showPage('dashboard')" class="btn-back">Back to Dashboard</button>
     </section>
 
     <!-- ===== PROFILE PAGE ===== -->
     <section id="profile" class="page">
-      <div class="header"><h1>Minerva</h1><p>Your Profile</p></div>
+      <div class="page-header"><h2>Profile</h2></div>
       <div class="profile-header">
         <div class="avatar-wrapper" id="avatarWrapper">
           <img src="Default_pfp.avif" alt="User Avatar" class="avatar" id="profile-avatar">
@@ -345,27 +374,42 @@
       <div class="profile-options">
         <button id="dark-mode-toggle" class="profile-btn">Enable Dark Mode</button>
         <button id="profile-settings" class="profile-btn">Profile Settings</button>
-        <button id="upgradePlanBtn" class="profile-btn btn-upgrade" style="display:none;">⭐ Upgrade to Pro</button>
-        <button onclick="showPage('dashboard')" class="profile-btn" style="background:var(--surface-3); color:var(--text-primary); border:1px solid var(--border-med);">← Back to Dashboard</button>
-        <button id="logout" class="profile-btn" style="background:var(--surface-3); color:#ef4444; border:1px solid rgba(239,68,68,0.2);">Sign out</button>
+        <button id="upgradePlanBtn" class="profile-btn btn-upgrade" style="display:none;">Upgrade Plan</button>
+        <button onclick="showPage('dashboard')" class="profile-btn btn-secondary">Back to Dashboard</button>
+        <button id="logout" class="profile-btn btn-danger-outline">Sign out</button>
       </div>
     </section>
 
     <!-- ===== SETTINGS PAGE ===== -->
     <section id="settingsPage" class="page">
-      <div class="header"><h1>Minerva</h1><p>Profile Settings</p></div>
-      <form id="settingsForm">
-        <label>Username</label>
-        <input type="text" id="editUsername" placeholder="Your name">
-        <label>Telephone</label>
-        <input type="tel" id="editPhone" placeholder="Phone number">
-        <label>Email</label>
-        <input type="email" id="editEmail" placeholder="Email address">
-        <button type="submit">Save Changes</button>
-        <button type="button" onclick="showPage('profile')" style="background:var(--surface-3); color:var(--text-primary); border:1px solid var(--border-med);">Cancel</button>
+      <div class="page-header"><h2>Settings</h2></div>
+      <form id="settingsForm" class="settings-form">
+        <div class="input-group"><label>Username</label><input type="text" id="editUsername" placeholder="Your name"></div>
+        <div class="input-group"><label>Telephone</label><input type="tel" id="editPhone" placeholder="Phone number"></div>
+        <div class="input-group"><label>Email</label><input type="email" id="editEmail" placeholder="Email address"></div>
+        <button type="submit" class="btn-primary">Save Changes</button>
+        <button type="button" onclick="showPage('profile')" class="btn-secondary">Cancel</button>
       </form>
     </section>
 
+  </div><!-- /app-shell -->
+
+  <!-- FLOATING AI CHAT BUTTON & PANEL -->
+  <button id="chatFab" class="chat-fab" style="display:none;" aria-label="AI Chat">AI</button>
+  <div id="chatFloatingPanel" class="chat-floating-panel" style="display:none;">
+    <div class="chat-floating-header">
+      <span>Minerva AI</span>
+      <button id="chatFloatingClose" class="chat-floating-close">&times;</button>
+    </div>
+    <div class="chat-messages" id="chatMessagesFloating">
+      <div class="chat-msg bot">
+        <div class="chat-bubble">Hi! I'm your Minerva AI assistant. How can I help?</div>
+      </div>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" id="chatInputFloating" placeholder="Type a message..." />
+      <button id="chatSendFloating">Send</button>
+    </div>
   </div>
 
   <!-- XP TOAST -->
@@ -374,18 +418,18 @@
   <!-- UPGRADE MODAL -->
   <div id="upgradeModal" class="modal-overlay" style="display:none;">
     <div class="modal-box">
-      <h2>⭐ Upgrade to Student Pro</h2>
-      <p>Unlock the full Minerva experience</p>
-      <ul class="modal-feature-list">
-        <li>✅ Unlimited projects</li>
-        <li>🌱 Habit tracker with streak chains</li>
-        <li>🎵 Focus sounds & study mode</li>
-        <li>📊 Full analytics dashboard</li>
-        <li>🔥 Streak & reward system</li>
+      <h2 id="upgradeModalTitle">Upgrade to Student Pro</h2>
+      <p id="upgradeModalSubtitle">Unlock the full Minerva experience</p>
+      <ul class="modal-feature-list" id="upgradeFeatureList">
+        <li>Unlimited projects</li>
+        <li>Habit tracker with streak chains</li>
+        <li>Focus sounds & study mode</li>
+        <li>Full analytics dashboard</li>
+        <li>Streak & reward system</li>
       </ul>
       <div class="modal-btns">
-        <button id="modalUpgradeBtn">Upgrade Now (Demo)</button>
-        <button id="modalCloseBtn" style="background:var(--surface-3); color:var(--text-secondary); border:1px solid var(--border-med);">Maybe Later</button>
+        <button id="modalUpgradeBtn" data-target-plan="pro" class="btn-primary">Upgrade (Demo)</button>
+        <button id="modalCloseBtn" class="btn-secondary">Maybe Later</button>
       </div>
     </div>
   </div>

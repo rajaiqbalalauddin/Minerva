@@ -180,6 +180,7 @@ let userPlan = "free";
 
 document.addEventListener("DOMContentLoaded", () => {
   showPage("loginPage");
+  populateEmailHistory();
 
   if (localStorage.getItem("theme") === "dark") {
     document.body.classList.add("dark-mode");
@@ -237,10 +238,25 @@ document.addEventListener("DOMContentLoaded", () => {
 // 2. PAGE NAVIGATION SYSTEM
 // =========================================
 function showPage(pageId) {
-  document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
-  const targetPage = document.getElementById(pageId);
-  if (!targetPage) return;
-  targetPage.classList.add("active");
+  const appShell = document.getElementById("appShell");
+  const authPages = ["loginPage", "signupPage"];
+  const isAuthPage = authPages.includes(pageId);
+
+  // Toggle app shell vs auth pages
+  if (isAuthPage) {
+    appShell.style.display = "none";
+    document.querySelectorAll(".auth-page").forEach(p => p.classList.remove("active"));
+    const target = document.getElementById(pageId);
+    if (target) target.classList.add("active");
+  } else {
+    // Hide auth pages
+    document.querySelectorAll(".auth-page").forEach(p => p.classList.remove("active"));
+    appShell.style.display = "";
+    // Show correct page inside app shell
+    document.querySelectorAll("#appShell .page").forEach(p => p.classList.remove("active"));
+    const target = document.getElementById(pageId);
+    if (target) target.classList.add("active");
+  }
 
   if (pageId === "dashboard") {
     loadUserStreak();
@@ -260,7 +276,8 @@ function showPage(pageId) {
 // =========================================
 // 3. PLAN SYSTEM
 // =========================================
-function isPro() { return userPlan === "pro"; }
+function isPro() { return userPlan === "pro" || userPlan === "elite"; }
+function isElite() { return userPlan === "elite"; }
 
 function applyPlanUI() {
   const proTabs = ["habitsTabBtn", "focusTabBtn", "analyticsTabBtn"];
@@ -269,8 +286,34 @@ function applyPlanUI() {
     if (el) el.style.display = isPro() ? "" : "none";
   });
 
+  const eliteTabs = ["aiChatTabBtn"];
+  eliteTabs.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = isElite() ? "" : "none";
+  });
+
   const badge = document.getElementById("proBadgeHeader");
-  if (badge) badge.style.display = isPro() ? "block" : "none";
+  if (badge) {
+    if (isElite()) {
+      badge.style.display = "block";
+      badge.textContent = "💎 Scholar Elite";
+      badge.className = "pro-badge-header elite-badge-header";
+    } else if (isPro()) {
+      badge.style.display = "block";
+      badge.textContent = "⭐ Student Pro";
+      badge.className = "pro-badge-header";
+    } else {
+      badge.style.display = "none";
+    }
+  }
+
+  // Show/hide floating chat button (elite only)
+  const chatFab = document.getElementById("chatFab");
+  if (chatFab) chatFab.style.display = isElite() ? "flex" : "none";
+
+  // Show/hide suggest tasks button (elite only)
+  const suggestBtn = document.getElementById("suggestTasksBtn");
+  if (suggestBtn) suggestBtn.style.display = isElite() ? "" : "none";
 }
 
 function applyProfilePlanUI() {
@@ -278,28 +321,77 @@ function applyProfilePlanUI() {
   const upgradeBtn = document.getElementById("upgradePlanBtn");
 
   if (planBadge) {
-    planBadge.textContent = isPro() ? "⭐ Student Pro" : "Free Plan";
-    planBadge.className = "profile-plan-badge" + (isPro() ? " pro" : "");
+    if (isElite()) {
+      planBadge.textContent = "💎 Scholar Elite";
+      planBadge.className = "profile-plan-badge elite";
+    } else if (isPro()) {
+      planBadge.textContent = "⭐ Student Pro";
+      planBadge.className = "profile-plan-badge pro";
+    } else {
+      planBadge.textContent = "Free Plan";
+      planBadge.className = "profile-plan-badge";
+    }
   }
-  if (upgradeBtn) upgradeBtn.style.display = isPro() ? "none" : "";
+  if (upgradeBtn) upgradeBtn.style.display = isElite() ? "none" : "";
 }
 
 // Upgrade modal
+function openUpgradeModal() {
+  const modal = document.getElementById("upgradeModal");
+  const title = document.getElementById("upgradeModalTitle");
+  const subtitle = document.getElementById("upgradeModalSubtitle");
+  const featureList = document.getElementById("upgradeFeatureList");
+  const upgradeBtn = document.getElementById("modalUpgradeBtn");
+
+  if (isPro() && !isElite()) {
+    // Pro user — show elite upgrade
+    title.textContent = "💎 Upgrade to Scholar Elite";
+    subtitle.textContent = "Unlock AI-powered productivity";
+    featureList.innerHTML = `
+      <li>🤖 AI Chatbot & Task Suggestions</li>
+      <li>📅 Calendar Synchronisation</li>
+      <li>📄 Export to PDF & Excel</li>
+      <li>🎯 Priority Support</li>
+      <li>✅ Everything in Student Pro</li>
+    `;
+    upgradeBtn.textContent = "Upgrade to Elite (Demo)";
+    upgradeBtn.dataset.targetPlan = "elite";
+  } else {
+    // Free user — show pro upgrade
+    title.textContent = "⭐ Upgrade to Student Pro";
+    subtitle.textContent = "Unlock the full Minerva experience";
+    featureList.innerHTML = `
+      <li>✅ Unlimited projects</li>
+      <li>🌱 Habit tracker with streak chains</li>
+      <li>🎵 Focus sounds & study mode</li>
+      <li>📊 Full analytics dashboard</li>
+      <li>🔥 Streak & reward system</li>
+    `;
+    upgradeBtn.textContent = "Upgrade to Pro (Demo)";
+    upgradeBtn.dataset.targetPlan = "pro";
+  }
+  modal.style.display = "flex";
+}
+
 document.addEventListener("click", (e) => {
-  if (e.target.id === "upgradePlanBtn" || e.target.id === "modalUpgradeBtn") {
-    if (e.target.id === "upgradePlanBtn") {
-      document.getElementById("upgradeModal").style.display = "flex";
+  if (e.target.id === "upgradePlanBtn") {
+    openUpgradeModal();
+  }
+  if (e.target.id === "modalUpgradeBtn") {
+    const targetPlan = e.target.dataset.targetPlan || "pro";
+    userPlan = targetPlan;
+    if (currentUser) {
+      currentUser.plan = targetPlan;
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+      localStorage.setItem(`userdata_${currentUser.email}`, JSON.stringify(currentUser));
+      saveFieldToCloud({ plan: targetPlan });
+    }
+    document.getElementById("upgradeModal").style.display = "none";
+    applyPlanUI();
+    applyProfilePlanUI();
+    if (targetPlan === "elite") {
+      showXPToast("💎 Welcome to Scholar Elite!", true);
     } else {
-      userPlan = "pro";
-      if (currentUser) {
-        currentUser.plan = "pro";
-        localStorage.setItem("currentUser", JSON.stringify(currentUser));
-        localStorage.setItem(`userdata_${currentUser.email}`, JSON.stringify(currentUser));
-        saveFieldToCloud({ plan: "pro" });
-      }
-      document.getElementById("upgradeModal").style.display = "none";
-      applyPlanUI();
-      applyProfilePlanUI();
       showXPToast("⭐ Welcome to Student Pro!", true);
     }
   }
@@ -401,6 +493,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("lastUserEmail", email);
 
+    saveEmailToHistory(email);
     registerUserInLeaderboard(email);
     sessionStartTime = Date.now();
     showPage("dashboard");
@@ -473,7 +566,8 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
     // Sign out so user goes through login flow
     await auth.signOut();
 
-    alert(`Account created with ${selectedPlan === "pro" ? "Student Pro ⭐" : "Free"} plan! Please log in.`);
+    const planLabel = selectedPlan === "elite" ? "Scholar Elite 💎" : selectedPlan === "pro" ? "Student Pro ⭐" : "Free";
+    alert(`Account created with ${planLabel} plan! Please log in.`);
     clearAuthErrors();
     showPage("loginPage");
   } catch (error) {
@@ -519,6 +613,100 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
 
 
 // =========================================
+// 4b. GOOGLE SIGN-IN
+// =========================================
+async function handleGoogleSignIn() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  try {
+    const result = await auth.signInWithPopup(provider);
+    const user = result.user;
+    const email = user.email;
+
+    // Save email to history
+    saveEmailToHistory(email);
+
+    // Load data from Firestore
+    const loaded = await loadAllFromCloud(user.uid, email);
+    if (!loaded) {
+      // First time Google sign-in — check if they picked a plan on signup
+      const selectedPlan = document.querySelector('input[name="plan"]:checked')?.value || "free";
+      await ensureUserDocInCloud(user.uid, email);
+      // Set plan if coming from signup page
+      if (document.getElementById("signupPage").classList.contains("active")) {
+        await saveFieldToCloud({ plan: selectedPlan });
+      }
+    }
+
+    const saved = localStorage.getItem(`userdata_${email}`);
+    if (saved) {
+      currentUser = JSON.parse(saved);
+    } else {
+      currentUser = {
+        email,
+        username: user.displayName || email.split("@")[0],
+        phone: user.phoneNumber || "",
+        plan: "free"
+      };
+      localStorage.setItem(`userdata_${email}`, JSON.stringify(currentUser));
+    }
+    // Use Google display name if we don't have one
+    if (user.displayName && (!currentUser.username || currentUser.username === email.split("@")[0])) {
+      currentUser.username = user.displayName;
+      localStorage.setItem(`userdata_${email}`, JSON.stringify(currentUser));
+      saveFieldToCloud({ username: user.displayName });
+    }
+
+    userPlan = currentUser.plan || "free";
+    isLoggedIn = true;
+    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("lastUserEmail", email);
+    registerUserInLeaderboard(email);
+    sessionStartTime = Date.now();
+    showPage("dashboard");
+  } catch (error) {
+    if (error.code === "auth/popup-closed-by-user") return;
+    console.error("Google sign-in error:", error.code, error.message);
+    alert("Google sign-in failed: " + getAuthErrorMessage(error.code));
+  }
+}
+
+document.getElementById("googleSignInBtn").addEventListener("click", handleGoogleSignIn);
+document.getElementById("googleSignUpBtn").addEventListener("click", handleGoogleSignIn);
+
+
+// =========================================
+// 4c. EMAIL HISTORY (autocomplete dropdown)
+// =========================================
+function getEmailHistory() {
+  return JSON.parse(localStorage.getItem("emailHistory")) || [];
+}
+
+function saveEmailToHistory(email) {
+  let history = getEmailHistory();
+  // Remove if already exists, then add to front
+  history = history.filter(e => e !== email);
+  history.unshift(email);
+  // Keep last 10
+  if (history.length > 10) history = history.slice(0, 10);
+  localStorage.setItem("emailHistory", JSON.stringify(history));
+  populateEmailHistory();
+}
+
+function populateEmailHistory() {
+  const datalist = document.getElementById("emailHistory");
+  if (!datalist) return;
+  const history = getEmailHistory();
+  datalist.innerHTML = "";
+  history.forEach(email => {
+    const opt = document.createElement("option");
+    opt.value = email;
+    datalist.appendChild(opt);
+  });
+}
+
+
+// =========================================
 // 5. DASHBOARD UI (MENU & TABS)
 // =========================================
 const menuBtn = document.getElementById("menuBtn");
@@ -537,8 +725,12 @@ document.addEventListener("click", (e) => {
 
 document.querySelectorAll(".tabs button").forEach(btn => {
   btn.addEventListener("click", () => {
+    if (btn.classList.contains("elite-tab") && !isElite()) {
+      openUpgradeModal();
+      return;
+    }
     if (btn.classList.contains("pro-tab") && !isPro()) {
-      document.getElementById("upgradeModal").style.display = "flex";
+      openUpgradeModal();
       return;
     }
 
@@ -1217,7 +1409,7 @@ async function renderLeaderboard() {
         div.className = `leaderboard-entry ${isYou ? "you" : ""}`;
         div.innerHTML = `
           <span class="lb-rank">${medals[i] || `#${i + 1}`}</span>
-          <span class="lb-name">${entry.username || entry.email.split("@")[0]}${isYou ? " (You)" : ""}${entry.plan === "pro" ? ' <span class="lb-pro-badge">PRO</span>' : ''}</span>
+          <span class="lb-name">${entry.username || entry.email.split("@")[0]}${isYou ? " (You)" : ""}${entry.plan === "elite" ? ' <span class="lb-elite-badge">ELITE</span>' : entry.plan === "pro" ? ' <span class="lb-pro-badge">PRO</span>' : ''}</span>
           <span class="lb-level">Lv.${entry.level || getLevelFromXP(entry.xp)}</span>
           <span class="lb-xp">${entry.xp || 0} XP</span>
         `;
@@ -1255,7 +1447,7 @@ async function renderLeaderboard() {
     div.className = `leaderboard-entry ${isYou ? "you" : ""}`;
     div.innerHTML = `
       <span class="lb-rank">${medals[i] || `#${i + 1}`}</span>
-      <span class="lb-name">${entry.name}${isYou ? " (You)" : ""}${entry.plan === "pro" ? ' <span class="lb-pro-badge">PRO</span>' : ''}</span>
+      <span class="lb-name">${entry.name}${isYou ? " (You)" : ""}${entry.plan === "elite" ? ' <span class="lb-elite-badge">ELITE</span>' : entry.plan === "pro" ? ' <span class="lb-pro-badge">PRO</span>' : ''}</span>
       <span class="lb-level">Lv.${entry.level}</span>
       <span class="lb-xp">${entry.xp} XP</span>
     `;
@@ -1524,7 +1716,461 @@ function renderAnalytics() {
 
 
 // =========================================
-// 20. PERIODIC CLOUD SYNC
+// 20. AI CHATBOT (ELITE) — with Tool Calling
+// =========================================
+
+// --- Configuration ---
+const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
+const GROQ_MODEL = "llama-3.1-8b-instant";
+
+const AI_SYSTEM_PROMPT = `You are Minerva AI, a friendly productivity assistant built into the Minerva student productivity app.
+
+Your capabilities:
+- You can READ the user's tasks, habits, transactions, and stats using your tools
+- You can CREATE, COMPLETE, and DELETE tasks
+- You can give study tips, time management advice, and motivational nudges
+- Keep responses short (2-4 sentences unless asked for detail)
+- Be encouraging but practical
+- Stay on topic: productivity, studying, personal development only
+
+IMPORTANT RULES:
+- ALWAYS use the get_tasks tool first before modifying tasks, so you know exact task names
+- When the user asks to delete or complete a task, use get_tasks first, then find the matching task name and use its EXACT text
+- When creating multiple tasks, call create_task once for each task
+- When the user asks about their data (tasks, habits, budget), use the appropriate tool to read it — do NOT guess`;
+
+let chatHistory = [];
+
+// --- Tool definitions for Groq function calling ---
+const AI_TOOLS = [
+  {
+    type: "function",
+    function: {
+      name: "get_tasks",
+      description: "Get all tasks for the current project and date. Returns both pending and completed tasks with their exact names.",
+      parameters: { type: "object", properties: {}, required: [] }
+    }
+  },
+  {
+    type: "function",
+    function: {
+      name: "create_task",
+      description: "Create a new task in the current project's to-do list",
+      parameters: {
+        type: "object",
+        properties: {
+          task_name: { type: "string", description: "The task text to add" }
+        },
+        required: ["task_name"]
+      }
+    }
+  },
+  {
+    type: "function",
+    function: {
+      name: "complete_task",
+      description: "Mark a task as completed by its exact name. Use get_tasks first to see exact names.",
+      parameters: {
+        type: "object",
+        properties: {
+          task_name: { type: "string", description: "The exact task text to mark as done" }
+        },
+        required: ["task_name"]
+      }
+    }
+  },
+  {
+    type: "function",
+    function: {
+      name: "delete_task",
+      description: "Delete a task by its exact name. Use get_tasks first to see exact names.",
+      parameters: {
+        type: "object",
+        properties: {
+          task_name: { type: "string", description: "The exact task text to delete" }
+        },
+        required: ["task_name"]
+      }
+    }
+  },
+  {
+    type: "function",
+    function: {
+      name: "get_habits",
+      description: "Get all habits with their streak counts and today's check-in status",
+      parameters: { type: "object", properties: {}, required: [] }
+    }
+  },
+  {
+    type: "function",
+    function: {
+      name: "get_transactions",
+      description: "Get all budget transactions with totals (balance, income, expenses)",
+      parameters: { type: "object", properties: {}, required: [] }
+    }
+  },
+  {
+    type: "function",
+    function: {
+      name: "get_stats",
+      description: "Get user stats: XP, level, streak, pomodoro count, total tasks done",
+      parameters: { type: "object", properties: {}, required: [] }
+    }
+  },
+  {
+    type: "function",
+    function: {
+      name: "get_projects",
+      description: "Get the list of all projects",
+      parameters: { type: "object", properties: {}, required: [] }
+    }
+  }
+];
+
+// --- Tool execution ---
+function executeAITool(name, args) {
+  switch (name) {
+    case "get_tasks": {
+      const key = getTodosKey();
+      const todos = JSON.parse(localStorage.getItem(key)) || [];
+      const project = getCurrentProject();
+      const date = document.getElementById("plannerDate")?.value || "today";
+      const pending = todos.filter(t => !t.done).map(t => t.text);
+      const completed = todos.filter(t => t.done).map(t => t.text);
+      return JSON.stringify({
+        project,
+        date,
+        pending: pending.length > 0 ? pending : ["(none)"],
+        completed: completed.length > 0 ? completed : ["(none)"],
+        total: todos.length
+      });
+    }
+
+    case "create_task": {
+      const key = getTodosKey();
+      const todos = JSON.parse(localStorage.getItem(key)) || [];
+      const taskName = args.task_name;
+      // Check for duplicates
+      if (todos.some(t => t.text.toLowerCase() === taskName.toLowerCase())) {
+        return JSON.stringify({ success: false, error: `Task "${taskName}" already exists` });
+      }
+      todos.push({ text: taskName, done: false });
+      localStorage.setItem(key, JSON.stringify(todos));
+      saveTodosToCloud(key, todos);
+      loadTodos();
+      return JSON.stringify({ success: true, message: `Task "${taskName}" created` });
+    }
+
+    case "complete_task": {
+      const key = getTodosKey();
+      const todos = JSON.parse(localStorage.getItem(key)) || [];
+      const idx = todos.findIndex(t => t.text.toLowerCase() === args.task_name.toLowerCase() && !t.done);
+      if (idx === -1) {
+        return JSON.stringify({ success: false, error: `Pending task "${args.task_name}" not found` });
+      }
+      todos[idx].done = true;
+      localStorage.setItem(key, JSON.stringify(todos));
+      saveTodosToCloud(key, todos);
+      awardXP(20, "Task Completed");
+      logDailyTaskCompletion();
+      const doneTasks = todos.filter(t => t.done).length;
+      checkTaskBadges(doneTasks);
+      loadTodos();
+      return JSON.stringify({ success: true, message: `Task "${args.task_name}" completed! +20 XP` });
+    }
+
+    case "delete_task": {
+      const key = getTodosKey();
+      const todos = JSON.parse(localStorage.getItem(key)) || [];
+      const idx = todos.findIndex(t => t.text.toLowerCase() === args.task_name.toLowerCase());
+      if (idx === -1) {
+        return JSON.stringify({ success: false, error: `Task "${args.task_name}" not found` });
+      }
+      const removed = todos.splice(idx, 1)[0];
+      localStorage.setItem(key, JSON.stringify(todos));
+      saveTodosToCloud(key, todos);
+      loadTodos();
+      return JSON.stringify({ success: true, message: `Task "${removed.text}" deleted` });
+    }
+
+    case "get_habits": {
+      const habits = getHabits();
+      const today = new Date().toLocaleDateString();
+      const result = habits.map(h => ({
+        name: h.name,
+        checkedToday: !!h.log[today],
+        streak: calcHabitStreak(h.log)
+      }));
+      return JSON.stringify(result.length > 0 ? result : [{ message: "No habits created yet" }]);
+    }
+
+    case "get_transactions": {
+      const transactions = JSON.parse(localStorage.getItem(`budget_${currentUser?.email}`)) || [];
+      let income = 0, expense = 0;
+      transactions.forEach(t => {
+        const amt = parseFloat(t.amount);
+        if (amt > 0) income += amt; else expense += amt;
+      });
+      return JSON.stringify({
+        transactions: transactions.length > 0 ? transactions : [{ message: "No transactions yet" }],
+        summary: {
+          balance: (income + expense).toFixed(2),
+          totalIncome: income.toFixed(2),
+          totalExpenses: Math.abs(expense).toFixed(2),
+          count: transactions.length
+        }
+      });
+    }
+
+    case "get_stats": {
+      if (!currentUser) return JSON.stringify({ error: "Not logged in" });
+      const email = currentUser.email;
+      let tasksDone = 0;
+      for (let k in localStorage) {
+        if (k.startsWith(`todos_${email}_`)) {
+          const todos = JSON.parse(localStorage.getItem(k)) || [];
+          tasksDone += todos.filter(t => t.done).length;
+        }
+      }
+      return JSON.stringify({
+        username: currentUser.username,
+        plan: currentUser.plan,
+        xp: getTotalXP(),
+        level: getLevelFromXP(getTotalXP()),
+        streak: parseInt(localStorage.getItem(`streak_${email}`) || "0"),
+        pomodoroSessions: pomodoroSessionsCompleted,
+        totalTasksDone: tasksDone,
+        totalHabits: getHabits().length,
+        badges: getEarnedBadges().length + " / " + ALL_BADGES.length
+      });
+    }
+
+    case "get_projects": {
+      const projects = getProjects();
+      const current = getCurrentProject();
+      return JSON.stringify({ projects, currentProject: current });
+    }
+
+    default:
+      return JSON.stringify({ error: `Unknown tool: ${name}` });
+  }
+}
+
+// --- Chat message rendering ---
+function appendChatMessage(container, role, text) {
+  const div = document.createElement("div");
+  div.className = `chat-msg ${role}`;
+  div.innerHTML = `<div class="chat-bubble">${formatChatMessage(text)}</div>`;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function formatChatMessage(text) {
+  // Escape HTML first, then apply simple formatting
+  let safe = escapeHTML(text);
+  // Bold: **text**
+  safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  // Newlines
+  safe = safe.replace(/\n/g, '<br>');
+  return safe;
+}
+
+function appendChatLoading(container) {
+  const div = document.createElement("div");
+  div.className = "chat-msg bot";
+  div.id = "chatLoading";
+  div.innerHTML = `<div class="chat-bubble chat-loading"><span></span><span></span><span></span></div>`;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function removeChatLoading() {
+  const el = document.getElementById("chatLoading");
+  if (el) el.remove();
+}
+
+function escapeHTML(str) {
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// --- Send message to Groq with tool-calling loop ---
+async function sendToAI(userMessage) {
+  if (typeof GROQ_API_KEY === "undefined" || !GROQ_API_KEY) {
+    return "AI assistant is not configured. Please add your Groq API key to firebase-config.js.";
+  }
+
+  chatHistory.push({ role: "user", content: userMessage });
+
+  try {
+    // Build messages with system prompt
+    const systemMessage = AI_SYSTEM_PROMPT;
+    let messages = [
+      { role: "system", content: systemMessage },
+      ...chatHistory
+    ];
+
+    // Tool-calling loop: the AI may call tools, we execute them and send results back
+    let maxRounds = 5;  // safety limit
+    while (maxRounds-- > 0) {
+      const response = await fetch(GROQ_API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${GROQ_API_KEY}`
+        },
+        body: JSON.stringify({
+          model: GROQ_MODEL,
+          messages,
+          tools: AI_TOOLS,
+          tool_choice: "auto",
+          max_tokens: 1024,
+          temperature: 0.4
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        const errMsg = errorData.error?.message || `Server error (${response.status})`;
+        console.error("Groq API error:", response.status, errorData);
+        throw new Error(errMsg);
+      }
+
+      const data = await response.json();
+      const choice = data.choices?.[0];
+      const assistantMsg = choice?.message;
+
+      if (!assistantMsg) throw new Error("No response from AI");
+
+      // Add assistant message to conversation
+      messages.push(assistantMsg);
+
+      // If the AI wants to call tools, execute them
+      if (choice.finish_reason === "tool_calls" || assistantMsg.tool_calls?.length > 0) {
+        for (const toolCall of assistantMsg.tool_calls) {
+          const fnName = toolCall.function.name;
+          let fnArgs = {};
+          try { fnArgs = JSON.parse(toolCall.function.arguments || "{}"); } catch (e) {}
+
+          console.log(`AI tool call: ${fnName}(${JSON.stringify(fnArgs)})`);
+          const result = executeAITool(fnName, fnArgs);
+
+          messages.push({
+            role: "tool",
+            tool_call_id: toolCall.id,
+            content: result
+          });
+        }
+        // Continue the loop — the AI will see the tool results and respond
+        continue;
+      }
+
+      // No tool calls — we have a final text response
+      const reply = assistantMsg.content || "Done!";
+      chatHistory.push({ role: "assistant", content: reply });
+
+      if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
+      return reply;
+    }
+
+    return "I ran into a loop processing your request. Please try rephrasing.";
+  } catch (err) {
+    console.error("AI chat error:", err);
+    return `Sorry, I couldn't connect to the AI service. ${err.message}`;
+  }
+}
+
+// --- Chat send handler (reusable for both inline and floating) ---
+async function handleChatSend(inputId, containerId) {
+  const input = document.getElementById(inputId);
+  const container = document.getElementById(containerId);
+  const text = input.value.trim();
+  if (!text) return;
+
+  appendChatMessage(container, "user", text);
+  input.value = "";
+  input.disabled = true;
+
+  appendChatLoading(container);
+  const reply = await sendToAI(text);
+  removeChatLoading();
+
+  appendChatMessage(container, "bot", reply);
+  input.disabled = false;
+  input.focus();
+}
+
+// --- Inline chat (AI Chat tab) ---
+document.getElementById("chatSendInline").addEventListener("click", () => {
+  handleChatSend("chatInputInline", "chatMessagesInline");
+});
+document.getElementById("chatInputInline").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") handleChatSend("chatInputInline", "chatMessagesInline");
+});
+
+// --- Floating chat panel ---
+document.getElementById("chatFab").addEventListener("click", () => {
+  const panel = document.getElementById("chatFloatingPanel");
+  panel.style.display = panel.style.display === "none" ? "flex" : "none";
+});
+document.getElementById("chatFloatingClose").addEventListener("click", () => {
+  document.getElementById("chatFloatingPanel").style.display = "none";
+});
+document.getElementById("chatSendFloating").addEventListener("click", () => {
+  handleChatSend("chatInputFloating", "chatMessagesFloating");
+});
+document.getElementById("chatInputFloating").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") handleChatSend("chatInputFloating", "chatMessagesFloating");
+});
+
+// --- Suggest Tasks (AI-powered) ---
+document.getElementById("suggestTasksBtn").addEventListener("click", async () => {
+  const btn = document.getElementById("suggestTasksBtn");
+  const resultDiv = document.getElementById("suggestTasksResult");
+
+  btn.disabled = true;
+  btn.textContent = "🤖 Thinking...";
+  resultDiv.style.display = "block";
+  resultDiv.innerHTML = '<div class="chat-loading"><span></span><span></span><span></span></div>';
+
+  const prompt = `Look at my current tasks using the get_tasks tool, then suggest 3-5 new actionable tasks I should add to this project. Return ONLY a numbered list, nothing else.`;
+
+  const reply = await sendToAI(prompt);
+
+  resultDiv.innerHTML = "";
+  const lines = reply.split("\n").filter(l => l.trim());
+  lines.forEach(line => {
+    const cleaned = line.replace(/^\d+[\.\)]\s*/, "").trim();
+    if (!cleaned) return;
+    const row = document.createElement("div");
+    row.className = "suggest-task-row";
+    row.innerHTML = `
+      <span class="suggest-task-text">${escapeHTML(cleaned)}</span>
+      <button class="suggest-task-add" onclick="addSuggestedTask(this, '${cleaned.replace(/'/g, "\\'")}')">+ Add</button>
+    `;
+    resultDiv.appendChild(row);
+  });
+
+  btn.disabled = false;
+  btn.textContent = "🤖 Suggest Tasks with AI";
+});
+
+function addSuggestedTask(btnEl, text) {
+  const key = getTodosKey();
+  const todos = JSON.parse(localStorage.getItem(key)) || [];
+  todos.push({ text, done: false });
+  localStorage.setItem(key, JSON.stringify(todos));
+  saveTodosToCloud(key, todos);
+  loadTodos();
+  btnEl.textContent = "Added ✓";
+  btnEl.disabled = true;
+  btnEl.classList.add("added");
+}
+
+
+// =========================================
+// 21. PERIODIC CLOUD SYNC
 // =========================================
 // Auto-sync to Firestore every 60 seconds while logged in
 setInterval(() => {
