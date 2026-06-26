@@ -1,0 +1,96 @@
+/* src/components/tabs/BudgetTab.module.css */
+.tab { display: flex; flex-direction: column; gap: 20px; }
+
+/* ── Balance hero ── */
+.hero {
+  background: var(--teal); color: var(--white);
+  border-radius: 18px; padding: 28px 28px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; box-shadow: var(--shadow-3d);
+}
+.heroLeft { display: flex; flex-direction: column; gap: 4px; }
+.heroLabel {
+  margin: 0; font-family: var(--font-main); font-weight: 700;
+  font-size: 1.1rem; letter-spacing: 0.08em;
+}
+.heroAmount {
+  margin: 0; font-family: var(--font-main); font-weight: 700;
+  font-size: 2.2rem; letter-spacing: 0.08em; color: var(--orange);
+}
+.heroSub { margin: 0; font-size: 0.78rem; opacity: 0.88; }
+.addBtn {
+  display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0;
+  background: var(--orange); color: var(--white); border: none;
+  border-radius: 14px; padding: 12px 22px;
+  font-family: var(--font-sub); font-weight: 700; font-size: 0.95rem;
+  cursor: pointer; box-shadow: var(--shadow-3d-sm);
+  transition: background var(--transition), transform var(--transition);
+}
+.addBtn:hover { background: var(--orange-hover); transform: translateY(-1px); }
+.addBtn:active { transform: translateY(1px); }
+
+/* ── Section title (shared) ── */
+.sectionTitle {
+  margin: 0 0 12px;
+  font-family: var(--font-main); font-weight: 700;
+  font-size: 1.25rem; color: var(--navy); letter-spacing: 0.08em;
+}
+
+/* ── Category grid ── */
+.catGrid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+}
+.catCard {
+  border-radius: 14px; padding: 18px; color: var(--white);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  box-shadow: var(--shadow-3d); transition: transform var(--transition);
+}
+.catCard:hover { transform: translateY(-3px); }
+.catIcon {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: rgba(255,255,255,0.2);
+  display: flex; align-items: center; justify-content: center;
+}
+.catLabel { margin: 0; font-size: 0.8rem; opacity: 0.9; }
+.catAmount {
+  margin: 0; font-family: var(--font-sub); font-weight: 700; font-size: 1.1rem;
+}
+
+/* Category color variants */
+.orange { background: var(--orange); }
+.teal   { background: var(--teal); }
+.navy   { background: var(--navy); }
+.red    { background: var(--red); }
+
+/* ── Transaction list ── */
+.txPanel {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 20px;
+}
+.empty {
+  color: var(--text-3); font-size: 0.85rem; text-align: center; padding: 16px;
+}
+.txRow {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; border-radius: var(--radius);
+  background: var(--surface-2); border: 1px solid var(--border);
+  margin-bottom: 6px; transition: border-color var(--transition);
+}
+.txRow:last-child { margin-bottom: 0; }
+.txRow:hover { border-color: var(--border-focus); }
+.txBody { flex: 1; min-width: 0; }
+.txDesc { margin: 0; font-size: 0.85rem; color: var(--text); }
+.txDate { margin: 2px 0 0; font-size: 0.72rem; color: var(--text-3); }
+.txAmount {
+  flex-shrink: 0; font-size: 0.85rem; font-weight: 600; color: var(--red);
+}
+.txDelete {
+  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border: none; border-radius: var(--radius);
+  background: var(--red); color: #fff; cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .catGrid { grid-template-columns: repeat(2, 1fr); }
+  .hero { flex-direction: column; align-items: flex-start; }
+}

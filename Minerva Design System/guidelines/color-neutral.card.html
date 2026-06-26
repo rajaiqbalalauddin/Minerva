@@ -1,0 +1,24 @@
+<!-- @dsCard group="Colors" viewport="700x170" name="Neutrals" subtitle="White, grey, black — surfaces, ink & borders" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; font-family: var(--font-body); background: #fff; }
+  .row { display: flex; gap: 14px; padding: 22px; }
+  .sw { flex: 1; border-radius: 14px; height: 96px; box-shadow: var(--shadow-soft);
+        display: flex; flex-direction: column; justify-content: flex-end; padding: 12px; box-sizing: border-box; }
+  .name { font-family: var(--font-display); font-size: 22px; line-height: 1; }
+  .hex { font-family: var(--font-meta); font-weight: 800; font-size: 12px; letter-spacing: .3px; opacity: .9; }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="sw" style="background:#fff;color:var(--mv-navy);border:2px solid #e3e8ec"><span class="name">White</span><span class="hex">#FFFFFF</span></div>
+  <div class="sw" style="background:var(--mv-grey);color:#fff"><span class="name">Grey</span><span class="hex">#ADB5BD</span></div>
+  <div class="sw" style="background:var(--mv-black);color:#fff"><span class="name">Black</span><span class="hex">#000000</span></div>
+  <div class="sw" style="background:var(--mv-lilac);color:var(--mv-lilac-ink)"><span class="name">Lilac</span><span class="hex">#EADDFF · avatar</span></div>
+</div>
+</body>
+</html>

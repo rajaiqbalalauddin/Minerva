@@ -1,0 +1,159 @@
+/* ============================================================
+   Minerva Design System — Global tokens
+   Semi-pixel-art + modern: chunky rounded blocks on hard offset
+   drop shadows. Navy structure, orange accent, 4-color status set.
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@200;300;400;500;600;700&family=Lexend+Deca:wght@400;500;600;700;800&display=swap");
+
+/* Jersey 10 — pixel display. Titles, buttons, numbers. */
+@font-face {
+  font-family: "Jersey 10";
+  src: url("../assets/fonts/Jersey_10/Jersey10-Regular.woff2") format("woff2"),
+       url("../assets/fonts/Jersey_10/Jersey10-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Jaro — rounded chunky. Hero greetings, nav labels. */
+@font-face {
+  font-family: "Jaro";
+  src: url("../assets/fonts/Jaro/static/Jaro-Regular.woff2") format("woff2"),
+       url("../assets/fonts/Jaro/static/Jaro-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* ---- Base palette ---- */
+  --mv-orange: #fb8500;
+  --mv-orange-deep: #e57700;
+  --mv-navy: #023047;
+  --mv-navy-2: #06384f;
+  --mv-grey: #adb5bd;
+  --mv-blue: #219ebc;
+  --mv-blue-deep: #1b86a0;
+  --mv-red: #d62828;
+  --mv-red-deep: #bb2020;
+  --mv-teal: #00a896;
+  --mv-teal-deep: #048c7e;
+  --mv-white: #ffffff;
+  --mv-black: #000000;
+
+  /* Soft tints (badge / chip backgrounds) */
+  --mv-orange-soft: #ffe8cc;
+  --mv-blue-soft: #d3eef4;
+  --mv-red-soft: #f7d5d5;
+  --mv-teal-soft: #cdeee9;
+  --mv-lilac: #eaddff;
+  --mv-lilac-ink: #4f378a;
+
+  /* ---- Semantic aliases ---- */
+  --surface-page: var(--mv-white);
+  --surface-sidebar: var(--mv-navy);
+  --surface-card: var(--mv-navy);
+  --surface-card-light: var(--mv-white);
+  --surface-accent: var(--mv-blue);
+
+  --text-strong: var(--mv-black);
+  --text-on-dark: var(--mv-white);
+  --text-muted: var(--mv-grey);
+  --text-accent: var(--mv-orange);
+  --text-inverse: var(--mv-navy);
+
+  --brand: var(--mv-orange);
+  --brand-ink: var(--mv-navy);
+
+  --status-urgent: var(--mv-red);
+  --status-soon: var(--mv-orange);
+  --status-done: var(--mv-teal);
+  --status-info: var(--mv-blue);
+
+  --border-hard: var(--mv-black);
+
+  /* ---- Families ---- */
+  --font-display: "Jersey 10", "Press Start 2P", monospace;
+  --font-hero: "Jaro", "Lexend", system-ui, sans-serif;
+  --font-meta: "Lexend Deca", "Lexend", system-ui, sans-serif;
+  --font-body: "Lexend", system-ui, -apple-system, sans-serif;
+
+  /* ---- Display scale (Jersey 10) ---- */
+  --type-display: 48px;
+  --type-h1: 46px;
+  --type-h2: 40px;
+  --type-h3: 36px;
+  --type-h4: 32px;
+  --type-stat: 56px;
+
+  /* ---- Text scale (Lexend / Lexend Deca) ---- */
+  --type-lead: 24px;
+  --type-body: 18px;
+  --type-sm: 16px;
+  --type-xs: 13px;
+  --type-nav: 20px;
+
+  /* ---- Weights ---- */
+  --weight-body: 400;
+  --weight-medium: 500;
+  --weight-bold: 700;
+  --weight-meta: 800;
+
+  /* ---- Line heights ---- */
+  --lh-tight: 1.0;
+  --lh-snug: 1.15;
+  --lh-body: 1.5;
+
+  /* ---- Tracking ---- */
+  --tracking-display: 0.5px;
+  --tracking-meta: 0.2px;
+
+  /* ---- Corner radius ---- */
+  --radius-sm: 15px;
+  --radius-md: 30px;
+  --radius-frame: 60px;
+  --radius-blob: 15px 15px 15px 50px;
+  --radius-pill: 100px;
+
+  /* ---- Hard drop shadows (the 3D sticker effect) ---- */
+  --shadow-pop: 5px 10px 4px 0 rgba(0, 0, 0, 0.25);
+  --shadow-lift: 10px 20px 4px 0 rgba(0, 0, 0, 0.25);
+  --shadow-soft: 2px 4px 4px 0 rgba(0, 0, 0, 0.25);
+  --shadow-flat: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  --shadow-navy: 5px 10px 4px 0 #023047;
+  --shadow-inset: inset 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+
+  /* ---- Spacing scale (8px base) ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 40px;
+  --space-8: 56px;
+  --space-9: 72px;
+
+  /* ---- Layout ---- */
+  --sidebar-w: 256px;
+  --content-pad: 32px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  color: var(--text-strong);
+  background: var(--surface-page);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root { height: 100%; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-thumb { background: #cfd6db; border-radius: 999px; }

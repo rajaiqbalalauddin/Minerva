@@ -1,0 +1,35 @@
+/* src/pages/Dashboard.module.css */
+/* The whole app is a white rounded card floating on a near-black backdrop,
+   matching the mockup. The sidebar + main sit side by side inside it. */
+.appFrame {
+  display: flex;
+  min-height: 100vh;
+  background: var(--black);
+}
+
+.main {
+  flex: 1;
+  background: var(--white);
+  border-radius: 24px;
+  margin: 12px 12px 12px 0;
+  padding: 22px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow: hidden;
+}
+
+/* Bottom row of info cards. */
+.infoRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+@media (max-width: 900px) {
+  .infoRow { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .appFrame { flex-direction: column; }
+  .main { margin: 0 12px 12px; }
+}

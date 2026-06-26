@@ -1,0 +1,10 @@
+/* ============================================================
+   Minerva Design System — global stylesheet entry point.
+   Consumers link THIS one file. It only @imports token files.
+   Keep it as a list of @import lines.
+   ============================================================ */
+
+@import "./tokens/fonts.css";
+@import "./tokens/colors.css";
+@import "./tokens/typography.css";
+@import "./tokens/shape.css";

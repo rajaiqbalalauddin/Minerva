@@ -1,0 +1,33 @@
+/* src/components/Pomodoro.module.css */
+.panel {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 24px; text-align: center;
+}
+.nav {
+  display: inline-flex; gap: 2px; background: var(--surface-3);
+  padding: 3px; border-radius: var(--radius); margin-bottom: 16px;
+}
+.navBtn, .navBtnActive {
+  padding: 6px 14px; font-size: 0.78rem; background: none; border: none;
+  border-radius: 6px; font-family: var(--font); font-weight: 500;
+  color: var(--text-3); cursor: pointer; transition: all var(--transition);
+}
+.navBtnActive { background: var(--surface); color: var(--accent); box-shadow: var(--shadow); }
+.timer {
+  font-size: 4rem; font-weight: 700; color: var(--text);
+  letter-spacing: -2px; line-height: 1; margin: 12px 0 20px;
+  font-variant-numeric: tabular-nums; /* stops digits jittering as they change */
+}
+.buttons { display: flex; justify-content: center; gap: 8px; }
+.start {
+  padding: 8px 24px; background: var(--accent); color: #fff; border: none;
+  border-radius: var(--radius); font-size: 0.85rem; font-weight: 500;
+  font-family: var(--font); cursor: pointer;
+}
+.start:hover { background: var(--accent-hover); }
+.secondary {
+  padding: 8px 16px; background: var(--surface); color: var(--text-2);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  font-size: 0.85rem; font-weight: 500; font-family: var(--font); cursor: pointer;
+}
+.secondary:hover { background: var(--surface-3); }

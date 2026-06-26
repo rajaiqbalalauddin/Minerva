@@ -1,0 +1,83 @@
+/* src/components/tabs/ActivityTab.module.css */
+.tab { display: flex; flex-direction: column; gap: 20px; }
+
+/* ── Summary banner ── */
+.summary {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+}
+.summaryItem {
+  background: var(--navy); color: var(--white);
+  border-radius: 14px; padding: 18px 16px; text-align: center;
+  box-shadow: var(--shadow-3d);
+  transition: transform var(--transition);
+}
+.summaryItem:hover { transform: translateY(-3px); }
+.summaryValue {
+  margin: 0;
+  font-family: var(--font-main); font-weight: 700;
+  font-size: 1.6rem; letter-spacing: 0.08em;
+}
+.summaryLabel {
+  margin: 4px 0 0; font-size: 0.75rem; opacity: 0.85;
+}
+
+/* ── Filters ── */
+.filters {
+  display: inline-flex; gap: 2px; background: var(--surface-3);
+  padding: 3px; border-radius: var(--radius); align-self: flex-start;
+}
+.filterBtn, .filterActive {
+  padding: 6px 14px; font-size: 0.78rem; background: none; border: none;
+  border-radius: 6px; font-family: var(--font); font-weight: 500;
+  color: var(--text-3); cursor: pointer; transition: all var(--transition);
+}
+.filterActive {
+  background: var(--surface); color: var(--accent);
+  box-shadow: var(--shadow);
+}
+
+/* ── Feed ── */
+.feed {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 20px;
+}
+.sectionTitle {
+  margin: 0 0 14px; font-size: 0.95rem; font-weight: 600; color: var(--text);
+}
+.empty {
+  color: var(--text-3); font-size: 0.85rem; text-align: center; padding: 16px;
+}
+.item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; border-radius: var(--radius);
+  background: var(--surface-2); border: 1px solid var(--border);
+  margin-bottom: 6px; transition: border-color var(--transition);
+}
+.item:last-child { margin-bottom: 0; }
+.item:hover { border-color: var(--border-focus); }
+
+/* Icon circles — color-coded by activity type */
+.iconWrap {
+  width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--white);
+}
+.task     { background: var(--green); }
+.pomodoro { background: var(--accent); }
+.badge    { background: var(--orange); }
+.budget   { background: var(--teal); }
+.habit    { background: var(--red); }
+
+.itemBody { flex: 1; min-width: 0; }
+.itemText { margin: 0; font-size: 0.85rem; color: var(--text); }
+.itemTime { margin: 2px 0 0; font-size: 0.72rem; color: var(--text-3); }
+
+.xpChip {
+  flex-shrink: 0; font-size: 0.72rem; font-weight: 600;
+  background: var(--accent-subtle); color: var(--accent);
+  padding: 3px 8px; border-radius: 10px;
+}
+
+@media (max-width: 700px) {
+  .summary { grid-template-columns: repeat(2, 1fr); }
+}

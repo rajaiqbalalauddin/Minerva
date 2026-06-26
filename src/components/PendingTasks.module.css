@@ -1,0 +1,63 @@
+/* src/components/PendingTasks.module.css */
+.wrap { margin: 4px 0; }
+.sectionTitle {
+  margin: 0 0 12px;
+  color: var(--navy);
+  font-family: var(--font-main);
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.08em;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  color: var(--white);
+  box-shadow: var(--shadow-3d);
+  transition: transform var(--transition);
+}
+.card:hover { transform: translateY(-3px); }
+.cardText { display: flex; flex-direction: column; gap: 4px; }
+.cardTitle {
+  margin: 0;
+  font-family: var(--font-sub);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+.cardWhen { margin: 0; font-size: 0.7rem; opacity: 0.92; }
+.checkbox {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  border: none;
+  background: var(--white);
+  color: var(--navy);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-3d-sm);
+}
+
+/* Urgency variants — map to the brand palette. */
+.red { background: var(--red); }
+.orange { background: var(--orange); }
+.teal { background: var(--teal); }
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px) {
+  .grid { grid-template-columns: 1fr; }
+}

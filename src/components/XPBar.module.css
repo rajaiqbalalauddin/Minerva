@@ -1,0 +1,17 @@
+/* src/components/XPBar.module.css */
+.container { display: flex; align-items: center; gap: 8px; }
+.levelBadge {
+  font-size: 0.7rem; font-weight: 600;
+  background: var(--accent); color: #fff;
+  padding: 2px 8px; border-radius: 10px; white-space: nowrap;
+}
+.track {
+  width: 80px; height: 6px;
+  background: var(--surface-3);
+  border-radius: 10px; overflow: hidden;
+}
+.fill {
+  height: 100%; background: var(--accent);
+  border-radius: 10px; transition: width 0.5s ease;
+}
+.label { font-size: 0.7rem; color: var(--text-3); white-space: nowrap; }

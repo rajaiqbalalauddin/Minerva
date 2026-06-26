@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Upgrade window" description="Premium paywall modal over the dimmed Minerva app — navy pricing panel + feature checklist with a monthly/yearly toggle." -->
+<helmet>
+  <script src="./ds-base.js"></script>
+  <style>
+    html,body{margin:0;height:100%;font-family:var(--font-body);}
+    *,*::before,*::after{box-sizing:border-box;}
+  </style>
+</helmet>
+
+<div style="position:relative;height:100vh;width:100vw;overflow:hidden;background:#fff;">
+
+  <!-- faint app backdrop -->
+  <div style="display:flex;height:100%;filter:saturate(.95);">
+    <x-import component-from-global-scope="MinervaDesignSystem_5790c8.Sidebar" active="Dashboard" hint-size="256px,100%"></x-import>
+    <main style="flex:1;min-width:0;padding:32px 40px;display:flex;flex-direction:column;gap:24px;">
+      <x-import component-from-global-scope="MinervaDesignSystem_5790c8.PageHeader" title="Dashboard" date="Tuesday 23 June 2026" hint-size="100%,80px"></x-import>
+      <x-import component-from-global-scope="MinervaDesignSystem_5790c8.Card" tone="navy" shadow="lift" hint-size="100%,140px">
+        <div style="font-family:var(--font-hero);font-size:40px;line-height:1.1;color:#fff;">Hi Raja, ready for a study session?</div>
+      </x-import>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;">
+        <x-import component-from-global-scope="MinervaDesignSystem_5790c8.StatCard" caption="Balance :" value="RM 6767.67" hint-size="100%,200px"></x-import>
+        <x-import component-from-global-scope="MinervaDesignSystem_5790c8.StatCard" caption="Spending" tone="blue" hint-size="100%,200px"></x-import>
+        <x-import component-from-global-scope="MinervaDesignSystem_5790c8.StatCard" caption="Insight" tone="blue" hint-size="100%,200px"></x-import>
+      </div>
+    </main>
+  </div>
+
+  <!-- dim overlay + window -->
+  <div style="position:absolute;inset:0;background:rgba(2,48,71,.55);display:flex;align-items:center;justify-content:center;padding:24px;overflow-y:auto;">
+    <div style="position:relative;display:flex;width:780px;max-width:100%;margin:auto;background:var(--mv-white);border-radius:var(--radius-md);box-shadow:var(--shadow-lift);overflow:hidden;">
+
+      <button style="position:absolute;top:18px;right:18px;width:38px;height:38px;border:none;border-radius:var(--radius-pill);background:rgba(255,255,255,.16);color:#fff;font-size:18px;line-height:1;cursor:pointer;z-index:2;" style-hover="background:rgba(255,255,255,.3)">✕</button>
+
+      <!-- LEFT: navy pricing panel -->
+      <div style="width:42%;flex-shrink:0;background:var(--mv-navy);padding:34px 30px;display:flex;flex-direction:column;color:#fff;">
+        <div style="font-family:var(--font-meta);font-weight:800;font-size:13px;letter-spacing:1.5px;color:var(--mv-orange);">MINERVA PRO</div>
+        <div style="font-family:var(--font-display);font-size:52px;line-height:.92;margin-top:8px;">Go<br>Premium</div>
+        <div style="font-family:var(--font-body);font-size:15px;color:rgba(255,255,255,.82);margin-top:12px;line-height:1.45;">Make studying feel like a game you're winning.</div>
+
+        <!-- billing toggle -->
+        <div style="display:flex;gap:4px;background:rgba(255,255,255,.1);border-radius:var(--radius-pill);padding:4px;margin-top:24px;">
+          <sc-if value="{{ isMonthly }}" hint-placeholder-val="{{ true }}">
+            <button style="flex:1;border:none;cursor:default;border-radius:100px;padding:9px 0;font-family:var(--font-meta);font-weight:800;font-size:13px;letter-spacing:.3px;background:var(--mv-orange);color:var(--mv-navy);box-shadow:var(--shadow-soft);">Monthly</button>
+          </sc-if>
+          <sc-if value="{{ notMonthly }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ setMonthly }}" style="flex:1;border:none;cursor:pointer;border-radius:100px;padding:9px 0;font-family:var(--font-meta);font-weight:800;font-size:13px;letter-spacing:.3px;background:transparent;color:rgba(255,255,255,.7);">Monthly</button>
+          </sc-if>
+          <sc-if value="{{ isYearly }}" hint-placeholder-val="{{ true }}">
+            <button style="flex:1;border:none;cursor:default;border-radius:100px;padding:9px 0;font-family:var(--font-meta);font-weight:800;font-size:13px;letter-spacing:.3px;background:var(--mv-orange);color:var(--mv-navy);box-shadow:var(--shadow-soft);">Yearly</button>
+          </sc-if>
+          <sc-if value="{{ notYearly }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ setYearly }}" style="flex:1;border:none;cursor:pointer;border-radius:100px;padding:9px 0;font-family:var(--font-meta);font-weight:800;font-size:13px;letter-spacing:.3px;background:transparent;color:rgba(255,255,255,.7);">Yearly</button>
+          </sc-if>
+        </div>
+
+        <!-- price -->
+        <div style="margin-top:24px;display:flex;align-items:baseline;gap:8px;">
+          <span style="font-family:var(--font-display);font-size:64px;line-height:.85;color:var(--mv-orange);">{{ price }}</span>
+          <span style="font-family:var(--font-body);font-size:15px;color:rgba(255,255,255,.78);">{{ period }}</span>
+        </div>
+        <div style="font-family:var(--font-meta);font-weight:800;font-size:12px;letter-spacing:.3px;color:var(--mv-teal);margin-top:8px;">{{ saveNote }}</div>
+
+        <div style="flex:1;"></div>
+        <img src="../../assets/study-hero.png" alt="" style="width:100%;margin-top:18px;margin-bottom:-34px;object-fit:contain;">
+      </div>
+
+      <!-- RIGHT: features + CTA -->
+      <div style="flex:1;min-width:0;padding:38px 34px 30px;display:flex;flex-direction:column;">
+        <div style="font-family:var(--font-display);font-size:30px;color:var(--mv-navy);letter-spacing:.5px;">Everything you get</div>
+
+        <div style="display:flex;flex-direction:column;gap:16px;margin-top:22px;">
+          <sc-for list="{{ features }}" as="feat" hint-placeholder-count="5">
+            <div style="display:flex;align-items:flex-start;gap:13px;">
+              <span style="flex-shrink:0;width:26px;height:26px;border-radius:var(--radius-pill);background:var(--mv-teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;box-shadow:var(--shadow-soft);">✓</span>
+              <div>
+                <div style="font-family:var(--font-body);font-weight:600;font-size:16px;color:var(--mv-navy);">{{ feat.title }}</div>
+                <div style="font-family:var(--font-body);font-size:13px;color:var(--mv-grey);margin-top:1px;">{{ feat.sub }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="flex:1;"></div>
+
+        <div style="margin-top:26px;">
+          <x-import component-from-global-scope="MinervaDesignSystem_5790c8.Button" variant="orange-navy" full="{{ true }}" hint-size="100%,56px">{{ ctaLabel }}</x-import>
+          <div style="display:flex;justify-content:center;margin-top:12px;">
+            <x-import component-from-global-scope="MinervaDesignSystem_5790c8.Button" variant="ghost" size="sm" hint-size="120px,40px">Maybe later</x-import>
+          </div>
+          <div style="text-align:center;font-family:var(--font-body);font-size:12px;color:var(--mv-grey);margin-top:6px;">Cancel anytime · No ads, ever</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;100%&quot;},&quot;billing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;monthly&quot;,&quot;yearly&quot;],&quot;default&quot;:&quot;yearly&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { billing: this.props.billing ?? "yearly" };
+
+  renderVals() {
+    const yearly = this.state.billing === "yearly";
+    return {
+      isMonthly: !yearly,
+      notMonthly: yearly,
+      isYearly: yearly,
+      notYearly: !yearly,
+      features: [
+        { title: "AI Tutor chat", sub: "Ask questions, get instant help" },
+        { title: "Unlimited focus sessions", sub: "No daily pomodoro cap" },
+        { title: "Advanced budget insights", sub: "Weekly trends & forecasts" },
+        { title: "Exclusive badges", sub: "Premium-only achievements" },
+        { title: "Ad-free experience", sub: "Pure, distraction-free study" },
+      ],
+      price: yearly ? "RM 15" : "RM 19",
+      period: "/ month",
+      saveNote: yearly ? "Billed yearly — save 20% 🎉" : "Billed monthly",
+      ctaLabel: yearly ? "Upgrade — RM 180/yr" : "Upgrade Now",
+      setMonthly: () => this.setState({ billing: "monthly" }),
+      setYearly: () => this.setState({ billing: "yearly" }),
+    };
+  }
+}
+</script>
+</body>
+</html>

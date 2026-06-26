@@ -1,0 +1,98 @@
+/* src/components/tabs/AIChatTab.module.css */
+.tab { display: flex; flex-direction: column; gap: 16px; }
+
+/* ── Header ── */
+.headerRow { display: flex; align-items: center; gap: 10px; }
+.eliteBadge {
+  font-size: 0.65rem; font-weight: 700;
+  background: var(--purple); color: var(--white);
+  padding: 2px 8px; border-radius: 6px; letter-spacing: 0.1em;
+}
+.title {
+  margin: 0; font-family: var(--font-main); font-weight: 700;
+  font-size: 1.25rem; color: var(--navy); letter-spacing: 0.08em;
+}
+
+/* ── Chat window ── */
+.chatWindow {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); overflow: hidden;
+  display: flex; flex-direction: column;
+  min-height: 420px;
+}
+
+.messageList {
+  flex: 1; padding: 20px; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 14px;
+}
+
+/* ── Messages ── */
+.msgAi, .msgUser {
+  display: flex; gap: 10px; max-width: 80%;
+}
+.msgUser { align-self: flex-end; flex-direction: row-reverse; }
+
+.msgAvatar {
+  width: 32px; height: 32px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--white);
+}
+.msgAi .msgAvatar { background: var(--navy); }
+.msgUser .msgAvatar { background: var(--teal); }
+
+.msgBubble {
+  border-radius: 14px; padding: 12px 16px;
+}
+.msgAi .msgBubble {
+  background: var(--navy); color: var(--white);
+  border-bottom-left-radius: 4px;
+  box-shadow: var(--shadow-3d-sm);
+}
+.msgUser .msgBubble {
+  background: var(--teal); color: var(--white);
+  border-bottom-right-radius: 4px;
+  box-shadow: var(--shadow-3d-sm);
+}
+.msgText { margin: 0; font-size: 0.85rem; line-height: 1.5; }
+
+/* ── Input bar ── */
+.inputBar {
+  display: flex; gap: 8px;
+  padding: 14px 16px; border-top: 1px solid var(--border);
+  background: var(--surface-2);
+}
+.chatInput {
+  flex: 1; padding: 10px 14px; font-size: 0.875rem; font-family: var(--font);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); color: var(--text);
+}
+.chatInput:focus {
+  outline: none; border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+}
+.sendBtn {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; background: var(--orange); color: var(--white);
+  border: none; border-radius: var(--radius); cursor: pointer;
+  box-shadow: var(--shadow-3d-sm);
+  transition: background var(--transition), transform var(--transition);
+}
+.sendBtn:hover { background: var(--orange-hover); transform: translateY(-1px); }
+.sendBtn:active { transform: translateY(1px); }
+
+/* ── Suggestion chips ── */
+.suggestions {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 16px 18px;
+}
+.suggestLabel { margin: 0 0 10px; font-size: 0.8rem; color: var(--text-3); }
+.chipRow { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  padding: 7px 14px; font-size: 0.78rem; font-family: var(--font);
+  background: var(--surface-2); color: var(--text-2);
+  border: 1px solid var(--border); border-radius: 20px;
+  cursor: pointer; transition: all var(--transition);
+}
+.chip:hover {
+  border-color: var(--teal); color: var(--teal); background: var(--surface);
+}

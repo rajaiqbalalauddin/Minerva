@@ -1,0 +1,58 @@
+/* ============================================================
+   Minerva — Color tokens
+   Source palette (from brand owner + Figma):
+     #FB8500 orange   #023047 navy     #ADB5BD grey
+     #219EBC blue     #D62828 red      #00A896 teal
+     #FFFFFF white     #000000 black
+   Pastel-leaning, playful-but-professional. Heavy use of navy
+   surfaces + orange accent + a 4-color pastel card set.
+   ============================================================ */
+
+:root {
+  /* ---- Base palette ---- */
+  --mv-orange: #fb8500;
+  --mv-orange-deep: #e57700;      /* hover / pressed orange */
+  --mv-navy: #023047;
+  --mv-navy-2: #06384f;           /* sidebar inactive hover */
+  --mv-grey: #adb5bd;
+  --mv-blue: #219ebc;
+  --mv-blue-deep: #1b86a0;
+  --mv-red: #d62828;
+  --mv-red-deep: #bb2020;
+  --mv-teal: #00a896;
+  --mv-teal-deep: #048c7e;
+  --mv-white: #ffffff;
+  --mv-black: #000000;
+
+  /* Soft tints (pastel washes used for badge / chip backgrounds) */
+  --mv-orange-soft: #ffe8cc;
+  --mv-blue-soft: #d3eef4;
+  --mv-red-soft: #f7d5d5;
+  --mv-teal-soft: #cdeee9;
+  --mv-lilac: #eaddff;            /* avatar / decorative lilac */
+  --mv-lilac-ink: #4f378a;
+
+  /* ---- Semantic aliases ---- */
+  --surface-page: var(--mv-white);
+  --surface-sidebar: var(--mv-navy);
+  --surface-card: var(--mv-navy);          /* dark hero / stat cards */
+  --surface-card-light: var(--mv-white);
+  --surface-accent: var(--mv-blue);        /* finance cards */
+
+  --text-strong: var(--mv-black);
+  --text-on-dark: var(--mv-white);
+  --text-muted: var(--mv-grey);
+  --text-accent: var(--mv-orange);
+  --text-inverse: var(--mv-navy);
+
+  --brand: var(--mv-orange);
+  --brand-ink: var(--mv-navy);
+
+  /* Status colors */
+  --status-urgent: var(--mv-red);          /* overdue / today */
+  --status-soon: var(--mv-orange);         /* upcoming */
+  --status-done: var(--mv-teal);           /* completed / future */
+  --status-info: var(--mv-blue);
+
+  --border-hard: var(--mv-black);
+}

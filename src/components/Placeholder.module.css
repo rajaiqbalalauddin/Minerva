@@ -1,0 +1,13 @@
+.placeholder{
+    background : var (--surface);
+    border : 1px dashed var (--border);
+    border-radius : var (--radius-lg);
+    padding: 48px 24px;
+    text-align: center;
+    color: var(--text-3);
+}
+.placeholder h2 {
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 6px;
+}

@@ -1,0 +1,94 @@
+/* src/components/tabs/AnalyticsTab.module.css */
+.tab { display: flex; flex-direction: column; gap: 20px; }
+
+/* ── Header ── */
+.headerRow { display: flex; align-items: center; gap: 10px; }
+.proBadge {
+  font-size: 0.65rem; font-weight: 700;
+  background: var(--orange); color: var(--white);
+  padding: 2px 8px; border-radius: 6px; letter-spacing: 0.1em;
+}
+.title {
+  margin: 0; font-family: var(--font-main); font-weight: 700;
+  font-size: 1.25rem; color: var(--navy); letter-spacing: 0.08em;
+}
+
+/* ── Stat cards ── */
+.statsGrid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+}
+.statCard {
+  border-radius: 14px; padding: 20px 16px; color: var(--white);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  text-align: center;
+  box-shadow: var(--shadow-3d); transition: transform var(--transition);
+}
+.statCard:hover { transform: translateY(-3px); }
+.navy   { background: var(--navy); }
+.teal   { background: var(--teal); }
+.orange { background: var(--orange); }
+.red    { background: var(--red); }
+
+.statValue {
+  margin: 0; font-family: var(--font-main); font-weight: 700;
+  font-size: 1.6rem; letter-spacing: 0.08em;
+}
+.statLabel { margin: 0; font-size: 0.75rem; opacity: 0.85; }
+
+/* ── Bottom grid: chart + breakdown ── */
+.bottomGrid {
+  display: grid; grid-template-columns: 1.5fr 1fr; gap: 18px;
+}
+
+/* ── Weekly chart ── */
+.chartCard {
+  background: var(--teal); color: var(--white);
+  border-radius: 18px; padding: 22px;
+  box-shadow: var(--shadow-3d);
+}
+.chartHeader { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+.chartTitle {
+  margin: 0; font-family: var(--font-main); font-weight: 700;
+  font-size: 1.05rem; letter-spacing: 0.08em;
+}
+.chartBox { height: 200px; }
+
+/* ── Category breakdown ── */
+.breakdownCard {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 22px;
+}
+.breakdownTitle {
+  margin: 0 0 16px; font-family: var(--font-main); font-weight: 700;
+  font-size: 1.05rem; color: var(--navy); letter-spacing: 0.08em;
+}
+.breakdownRow { margin-bottom: 14px; }
+.breakdownRow:last-child { margin-bottom: 0; }
+.breakdownInfo {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+}
+.breakdownDot {
+  width: 10px; height: 10px; border-radius: 50%;
+}
+.breakdownDot.navy   { background: var(--navy); }
+.breakdownDot.teal   { background: var(--teal); }
+.breakdownDot.orange { background: var(--orange); }
+.breakdownDot.red    { background: var(--red); }
+.breakdownLabel { flex: 1; font-size: 0.82rem; color: var(--text); }
+.breakdownPercent { font-size: 0.82rem; font-weight: 600; color: var(--text-2); }
+.breakdownTrack {
+  height: 8px; background: var(--surface-3);
+  border-radius: 8px; overflow: hidden;
+}
+.breakdownFill {
+  height: 100%; border-radius: 8px; transition: width 0.5s ease;
+}
+.breakdownFill.navy   { background: var(--navy); }
+.breakdownFill.teal   { background: var(--teal); }
+.breakdownFill.orange { background: var(--orange); }
+.breakdownFill.red    { background: var(--red); }
+
+@media (max-width: 700px) {
+  .statsGrid { grid-template-columns: repeat(2, 1fr); }
+  .bottomGrid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,24 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Status colors" subtitle="Urgency mapping for tasks & badges" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; font-family: var(--font-body); background: #fff; }
+  .row { display: flex; gap: 14px; padding: 22px; }
+  .sw { flex: 1; border-radius: 14px; height: 78px; box-shadow: var(--shadow-soft); color:#fff;
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap:4px; }
+  .name { font-family: var(--font-display); font-size: 22px; line-height: 1; }
+  .role { font-family: var(--font-meta); font-weight:800; font-size: 12px; opacity:.9; }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="sw" style="background:var(--status-urgent)"><span class="name">Urgent</span><span class="role">today / overdue</span></div>
+  <div class="sw" style="background:var(--status-soon)"><span class="name">Soon</span><span class="role">upcoming</span></div>
+  <div class="sw" style="background:var(--status-done)"><span class="name">Done</span><span class="role">complete / later</span></div>
+  <div class="sw" style="background:var(--status-info)"><span class="name">Info</span><span class="role">finance / neutral</span></div>
+</div>
+</body>
+</html>

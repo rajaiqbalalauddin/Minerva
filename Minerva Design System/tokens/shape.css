@@ -1,0 +1,41 @@
+/* ============================================================
+   Minerva — Shape: radius, shadow, spacing
+   The signature Minerva look is the chunky "hard drop shadow":
+   an offset, un-blurred-ish black shadow that makes every box
+   feel like a 3D sticker. Two flavours:
+     --shadow-pop   small offset, on light cards
+     --shadow-lift  large offset, on hero / floating elements
+   Some buttons cast a NAVY shadow instead of black.
+   ============================================================ */
+
+:root {
+  /* ---- Corner radius ---- */
+  --radius-sm: 15px;        /* buttons, chips, small cards */
+  --radius-md: 30px;        /* large cards, hero, logo pill */
+  --radius-frame: 60px;     /* the whole app frame */
+  --radius-blob: 15px 15px 15px 50px;  /* promo card "speech-blob" corner */
+  --radius-pill: 100px;     /* avatars, fully-round */
+
+  /* ---- Hard drop shadows (the 3D sticker effect) ---- */
+  --shadow-pop: 5px 10px 4px 0 rgba(0, 0, 0, 0.25);
+  --shadow-lift: 10px 20px 4px 0 rgba(0, 0, 0, 0.25);
+  --shadow-soft: 2px 4px 4px 0 rgba(0, 0, 0, 0.25);
+  --shadow-flat: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  --shadow-navy: 5px 10px 4px 0 #023047;       /* orange-on-navy buttons */
+  --shadow-inset: inset 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+
+  /* ---- Spacing scale (8px base) ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 40px;
+  --space-8: 56px;
+  --space-9: 72px;
+
+  /* ---- Layout ---- */
+  --sidebar-w: 256px;
+  --content-pad: 32px;
+}

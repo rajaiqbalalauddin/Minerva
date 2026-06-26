@@ -1,0 +1,22 @@
+/* src/components/ProjectBar.module.css */
+.bar {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 16px; flex-wrap: wrap;
+}
+.bar label { font-size: 0.8rem; color: var(--text-2); font-weight: 500; }
+.bar select {
+  flex: 1; min-width: 120px; padding: 10px 12px; font-size: 0.875rem;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); color: var(--text); font-family: var(--font);
+}
+.small, .smallDanger {
+  display: flex; align-items: center; gap: 4px;
+  padding: 6px 12px; font-size: 0.78rem; background: var(--surface);
+  color: var(--text-2); border: 1px solid var(--border);
+  border-radius: var(--radius); font-family: var(--font); cursor: pointer;
+}
+.small:hover { background: var(--surface-3); }
+.small:disabled { opacity: 0.5; cursor: not-allowed; }
+.smallDanger { color: var(--red); border-color: rgba(220,38,38,0.2); }
+.smallDanger:hover { background: var(--amber-bg); }
+.note { width: 100%; font-size: 0.78rem; color: var(--red); }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Minerva app screen" description="Navy sidebar + page header + content grid — the Minerva app shell to build any screen on." -->
+<helmet>
+  <script src="./ds-base.js"></script>
+  <style>
+    html,body{margin:0;height:100%;font-family:var(--font-body);background:#d7dde1;}
+    *,*::before,*::after{box-sizing:border-box;}
+  </style>
+</helmet>
+<div style="display:flex;height:100vh;background:#fff;overflow:hidden;">
+  <x-import component-from-global-scope="MinervaDesignSystem_5790c8.Sidebar"
+            active="Dashboard" hint-size="256px,100%"></x-import>
+
+  <main style="flex:1;min-width:0;padding:32px 40px 48px;overflow-y:auto;display:flex;flex-direction:column;gap:28px;">
+    <x-import component-from-global-scope="MinervaDesignSystem_5790c8.PageHeader"
+              title="Dashboard" date="Tuesday 23 June 2026" hint-size="100%,80px"></x-import>
+
+    <x-import component-from-global-scope="MinervaDesignSystem_5790c8.Card"
+              tone="navy" shadow="lift" hint-size="100%,160px">
+      <div style="font-family:var(--font-hero);font-size:40px;line-height:1.1;color:#fff;">
+        Hi Raja, ready for a study session?
+      </div>
+    </x-import>
+
+    <div style="font-family:var(--font-display);font-size:40px;color:#000;letter-spacing:.5px;">Pending task</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;">
+      <x-import component-from-global-scope="MinervaDesignSystem_5790c8.TaskChip" title="Walk the cat" time="9.00 a.m , Today" tone="red" hint-size="100%,120px"></x-import>
+      <x-import component-from-global-scope="MinervaDesignSystem_5790c8.TaskChip" title="Assignment" time="7.00 a.m , Today" tone="red" hint-size="100%,120px"></x-import>
+      <x-import component-from-global-scope="MinervaDesignSystem_5790c8.TaskChip" title="Gym" time="12.00 p.m , Tomorrow" tone="orange" hint-size="100%,120px"></x-import>
+      <x-import component-from-global-scope="MinervaDesignSystem_5790c8.TaskChip" title="Watch Anime" time="9.00 a.m , 27 June" tone="teal" hint-size="100%,120px"></x-import>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;">
+      <x-import component-from-global-scope="MinervaDesignSystem_5790c8.StatCard" caption="Balance :" value="RM 6767.67" hint-size="100%,240px"></x-import>
+      <x-import component-from-global-scope="MinervaDesignSystem_5790c8.StatCard" caption="Spending" tone="blue" hint-size="100%,240px"></x-import>
+      <x-import component-from-global-scope="MinervaDesignSystem_5790c8.StatCard" caption="Insight" tone="blue" hint-size="100%,240px"></x-import>
+    </div>
+  </main>
+</div>
+</x-dc>
+</body>
+</html>

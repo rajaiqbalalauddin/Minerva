@@ -1,0 +1,65 @@
+/* src/components/InfoCards.module.css */
+.card {
+  background: var(--teal);
+  border-radius: 18px;
+  padding: 22px;
+  color: var(--white);
+  min-height: 200px;
+  box-shadow: var(--shadow-3d);
+  transition: transform var(--transition);
+}
+.card:hover { transform: translateY(-3px); }
+
+/* Balance card */
+.cardLabel {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-main);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+}
+.amount {
+  margin: 28px 0;
+  text-align: center;
+  color: var(--orange);
+  font-family: var(--font-main);
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: 0.08em;
+}
+.addBtn {
+  display: block;
+  width: 100%;
+  background: var(--orange);
+  color: var(--white);
+  border: none;
+  border-radius: 14px;
+  padding: 12px;
+  font-family: var(--font-sub);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-3d-sm);
+  transition: background var(--transition), transform var(--transition);
+}
+.addBtn:hover { background: var(--orange-hover); transform: translateY(-1px); }
+.addBtn:active { transform: translateY(1px); }
+
+/* Spending + Insight shared title */
+.cardTitle {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-main);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+}
+.chartCard { display: flex; flex-direction: column; }
+.chartBox { flex: 1; margin-top: 12px; min-height: 130px; }
+
+.centerCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

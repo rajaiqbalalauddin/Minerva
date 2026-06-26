@@ -1,0 +1,51 @@
+/* ============================================================
+   Minerva — Typography tokens
+   Four faces, each with a clear job:
+     Jersey 10   → pixel display. Page titles, section heads,
+                   button labels, big numbers. ALL-CAPS friendly.
+     Jaro        → chunky rounded. Hero greetings, nav labels.
+     Lexend Deca → metadata, dates, small labels (extra-bold).
+     Lexend      → body copy, descriptions, the rare thin "+".
+   Jersey 10 renders ~30% short for its point size, so its display
+   sizes are set large.
+   ============================================================ */
+
+:root {
+  /* ---- Families ---- */
+  --font-display: "Jersey 10", "Press Start 2P", monospace;
+  --font-hero: "Jaro", "Lexend", system-ui, sans-serif;
+  --font-meta: "Lexend Deca", "Lexend", system-ui, sans-serif;
+  --font-body: "Lexend", system-ui, -apple-system, sans-serif;
+
+  /* ---- Display scale (Jersey 10) ---- */
+  --type-display: 48px;     /* page title, hero headline */
+  --type-h1: 46px;          /* promo headline */
+  --type-h2: 40px;          /* section heading "Pending task" */
+  --type-h3: 36px;          /* button label large */
+  --type-h4: 32px;          /* button label, card heading */
+  --type-stat: 56px;        /* balance / big numbers */
+
+  /* ---- Text scale (Lexend / Lexend Deca) ---- */
+  --type-lead: 24px;        /* date, lead label */
+  --type-body: 18px;        /* body copy */
+  --type-sm: 16px;          /* secondary copy */
+  --type-xs: 13px;          /* fine print */
+
+  /* ---- Nav / Jaro ---- */
+  --type-nav: 20px;
+
+  /* ---- Weights ---- */
+  --weight-body: 400;
+  --weight-medium: 500;
+  --weight-bold: 700;
+  --weight-meta: 800;       /* Lexend Deca ExtraBold */
+
+  /* ---- Line heights ---- */
+  --lh-tight: 1.0;          /* @kind other */
+  --lh-snug: 1.15;          /* @kind other */
+  --lh-body: 1.5;           /* @kind other */
+
+  /* ---- Tracking ---- */
+  --tracking-display: 0.5px;
+  --tracking-meta: 0.2px;
+}

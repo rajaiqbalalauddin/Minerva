@@ -1,0 +1,23 @@
+<!-- @dsCard group="Brand" viewport="700x200" name="Hard shadows" subtitle="The 3D sticker effect — offset black/navy drop shadows" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; font-family: var(--font-body); background: #f1f4f6; }
+  .row { display:flex; gap:26px; padding: 34px 28px; }
+  .box { width:120px; height:84px; border-radius: var(--radius-sm); background:#fff;
+         display:flex; align-items:center; justify-content:center; text-align:center;
+         font-family: var(--font-display); font-size:18px; color:var(--mv-navy); }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="box" style="box-shadow:var(--shadow-soft)">soft</div>
+  <div class="box" style="box-shadow:var(--shadow-pop)">pop</div>
+  <div class="box" style="box-shadow:var(--shadow-lift)">lift</div>
+  <div class="box" style="background:var(--mv-orange);color:#fff;box-shadow:var(--shadow-navy)">navy</div>
+</div>
+</body>
+</html>

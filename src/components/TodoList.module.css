@@ -1,0 +1,40 @@
+/* src/components/TodoList.module.css */
+.panel {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 20px;
+}
+.inputRow { display: flex; gap: 8px; margin-bottom: 12px; }
+.inputRow input {
+  flex: 1; padding: 10px 12px; font-size: 0.875rem; font-family: var(--font);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); color: var(--text);
+}
+.inputRow input:focus {
+  outline: none; border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+}
+.addBtn {
+  display: flex; align-items: center; gap: 4px;
+  padding: 10px 18px; background: var(--accent); color: #fff; border: none;
+  border-radius: var(--radius); font-size: 0.85rem; font-weight: 500;
+  font-family: var(--font); cursor: pointer;
+}
+.addBtn:hover { background: var(--accent-hover); }
+.list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.empty { color: var(--text-3); font-size: 0.85rem; text-align: center; padding: 16px; }
+.item, .itemDone {
+  display: flex; justify-content: space-between; align-items: center;
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 10px 14px;
+}
+.item:hover { border-color: var(--border-focus); }
+.text { flex: 1; }
+.itemDone .text { text-decoration: line-through; color: var(--text-3); }
+.actions { display: flex; gap: 5px; }
+.completeBtn, .deleteBtn {
+  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border: none; border-radius: var(--radius);
+  cursor: pointer; color: #fff;
+}
+.completeBtn { background: var(--green); }
+.deleteBtn { background: var(--red); }

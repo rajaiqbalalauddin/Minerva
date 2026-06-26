@@ -1,0 +1,12 @@
+/* src/components/tabs/TasksTab.module.css */
+.tab { display: flex; flex-direction: column; }
+.todoHeader {
+  display: flex; align-items: center; justify-content: space-between;
+  margin: 20px 0 14px;
+}
+.todoHeader h3 { font-size: 0.95rem; font-weight: 600; color: var(--text); }
+.dateInput {
+  width: auto; padding: 6px 10px; font-size: 0.78rem;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  color: var(--text-2); font-family: var(--font);
+}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Profile window" description="Account profile modal floating over the dimmed Minerva app — avatar header, stat tiles, editable fields and actions." -->
+<helmet>
+  <script src="./ds-base.js"></script>
+  <style>
+    html,body{margin:0;height:100%;font-family:var(--font-body);}
+    *,*::before,*::after{box-sizing:border-box;}
+  </style>
+</helmet>
+
+<div style="position:relative;height:100vh;width:100vw;overflow:hidden;background:#fff;">
+
+  <!-- faint app backdrop -->
+  <div style="display:flex;height:100%;filter:saturate(.95);">
+    <x-import component-from-global-scope="MinervaDesignSystem_5790c8.Sidebar" active="Dashboard" hint-size="256px,100%"></x-import>
+    <main style="flex:1;min-width:0;padding:32px 40px;display:flex;flex-direction:column;gap:24px;">
+      <x-import component-from-global-scope="MinervaDesignSystem_5790c8.PageHeader" title="Dashboard" date="Tuesday 23 June 2026" hint-size="100%,80px"></x-import>
+      <x-import component-from-global-scope="MinervaDesignSystem_5790c8.Card" tone="navy" shadow="lift" hint-size="100%,140px">
+        <div style="font-family:var(--font-hero);font-size:40px;line-height:1.1;color:#fff;">Hi Raja, ready for a study session?</div>
+      </x-import>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;">
+        <x-import component-from-global-scope="MinervaDesignSystem_5790c8.StatCard" caption="Balance :" value="RM 6767.67" hint-size="100%,200px"></x-import>
+        <x-import component-from-global-scope="MinervaDesignSystem_5790c8.StatCard" caption="Spending" tone="blue" hint-size="100%,200px"></x-import>
+        <x-import component-from-global-scope="MinervaDesignSystem_5790c8.StatCard" caption="Insight" tone="blue" hint-size="100%,200px"></x-import>
+      </div>
+    </main>
+  </div>
+
+  <!-- dim overlay + window -->
+  <div style="position:absolute;inset:0;background:rgba(2,48,71,.55);display:flex;align-items:center;justify-content:center;padding:24px;overflow-y:auto;">
+    <div style="position:relative;width:520px;max-width:100%;margin:auto;background:var(--mv-white);border-radius:var(--radius-md);box-shadow:var(--shadow-lift);overflow:hidden;">
+
+      <!-- navy header band -->
+      <div style="position:relative;height:128px;background:var(--mv-navy);">
+        <button style="position:absolute;top:18px;right:18px;width:38px;height:38px;border:none;border-radius:var(--radius-pill);background:rgba(255,255,255,.14);color:#fff;font-size:18px;line-height:1;cursor:pointer;" style-hover="background:rgba(255,255,255,.26)">✕</button>
+        <div style="position:absolute;top:22px;left:28px;font-family:var(--font-display);font-size:30px;color:#fff;letter-spacing:.5px;">Profile</div>
+      </div>
+
+      <!-- avatar overlapping band -->
+      <div style="display:flex;flex-direction:column;align-items:center;margin-top:-56px;padding:0 28px 28px;">
+        <div style="border-radius:var(--radius-pill);padding:5px;background:var(--mv-white);box-shadow:var(--shadow-pop);">
+          <x-import component-from-global-scope="MinervaDesignSystem_5790c8.Avatar" name="Raja Kumar" size="100" hint-size="100px,100px"></x-import>
+        </div>
+
+        <div style="font-family:var(--font-hero);font-size:30px;color:var(--mv-navy);margin-top:12px;">Raja Kumar</div>
+        <div style="font-family:var(--font-body);font-size:15px;color:var(--mv-grey);margin-top:2px;">raja.kumar@student.edu</div>
+
+        <div style="margin-top:12px;">
+          <x-import component-from-global-scope="MinervaDesignSystem_5790c8.Badge" tone="{{ planTone }}" soft="{{ true }}" dot="{{ true }}" hint-size="120px,30px">{{ planLabel }}</x-import>
+        </div>
+
+        <!-- stat tiles -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;width:100%;margin-top:24px;">
+          <div style="background:var(--mv-orange-soft);border-radius:var(--radius-sm);box-shadow:var(--shadow-soft);padding:16px 10px;text-align:center;">
+            <div style="font-family:var(--font-display);font-size:38px;line-height:1;color:var(--mv-navy);">12</div>
+            <div style="font-family:var(--font-meta);font-weight:800;font-size:12px;color:var(--mv-navy);margin-top:6px;letter-spacing:.2px;">DAY STREAK</div>
+          </div>
+          <div style="background:var(--mv-teal-soft);border-radius:var(--radius-sm);box-shadow:var(--shadow-soft);padding:16px 10px;text-align:center;">
+            <div style="font-family:var(--font-display);font-size:38px;line-height:1;color:var(--mv-navy);">148</div>
+            <div style="font-family:var(--font-meta);font-weight:800;font-size:12px;color:var(--mv-navy);margin-top:6px;letter-spacing:.2px;">SESSIONS</div>
+          </div>
+          <div style="background:var(--mv-blue-soft);border-radius:var(--radius-sm);box-shadow:var(--shadow-soft);padding:16px 10px;text-align:center;">
+            <div style="font-family:var(--font-display);font-size:38px;line-height:1;color:var(--mv-navy);">9</div>
+            <div style="font-family:var(--font-meta);font-weight:800;font-size:12px;color:var(--mv-navy);margin-top:6px;letter-spacing:.2px;">BADGES</div>
+          </div>
+        </div>
+
+        <!-- editable fields -->
+        <div style="display:flex;flex-direction:column;gap:16px;width:100%;margin-top:24px;">
+          <x-import component-from-global-scope="MinervaDesignSystem_5790c8.Input" label="Name" defaultValue="Raja Kumar" hint-size="100%,72px"></x-import>
+          <x-import component-from-global-scope="MinervaDesignSystem_5790c8.Input" label="Email" defaultValue="raja.kumar@student.edu" hint-size="100%,72px"></x-import>
+        </div>
+
+        <!-- upgrade nudge (free plan only) -->
+        <sc-if value="{{ isFree }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;align-items:center;gap:14px;width:100%;margin-top:20px;background:var(--mv-blue);border-radius:var(--radius-blob);box-shadow:var(--shadow-soft);padding:16px 18px;">
+            <div style="flex:1;">
+              <div style="font-family:var(--font-display);font-size:24px;color:#fff;line-height:1;">Unlock AI Tutor</div>
+              <div style="font-family:var(--font-body);font-size:13px;color:rgba(255,255,255,.88);margin-top:4px;">Go Premium for unlimited focus &amp; AI help.</div>
+            </div>
+            <x-import component-from-global-scope="MinervaDesignSystem_5790c8.Button" variant="orange-navy" size="sm" hint-size="120px,44px">Upgrade</x-import>
+          </div>
+        </sc-if>
+
+        <!-- actions -->
+        <div style="display:flex;gap:14px;width:100%;margin-top:24px;">
+          <x-import component-from-global-scope="MinervaDesignSystem_5790c8.Button" variant="primary" full="{{ true }}" hint-size="100%,56px">Save Changes</x-import>
+          <x-import component-from-global-scope="MinervaDesignSystem_5790c8.Button" variant="ghost" hint-size="120px,56px">Log Out</x-import>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;100%&quot;},&quot;plan&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Free&quot;,&quot;Premium&quot;],&quot;default&quot;:&quot;Free&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const plan = this.props.plan ?? "Free";
+    const isFree = plan === "Free";
+    return {
+      isFree,
+      planLabel: isFree ? "Free plan" : "Premium",
+      planTone: isFree ? "grey" : "teal",
+    };
+  }
+}
+</script>
+</body>
+</html>
